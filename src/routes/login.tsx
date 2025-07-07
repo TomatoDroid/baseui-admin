@@ -69,7 +69,7 @@ function RouteComponent() {
                 </label>
                 <input name="password" type="password" className="input" placeholder="Password" />
                 <button type="submit" className="btn mt-4 btn-neutral">
-                  {isLoggingIn ? 'Logging in...' : 'Login'}
+                  {isLoggingIn ? <span className="loading-spin loading"></span> : 'Login'}
                 </button>
               </fieldset>
             </form>
