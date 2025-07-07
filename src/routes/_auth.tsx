@@ -30,7 +30,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="mb-2 navbar border-b border-neutral bg-base-100">
         <div className="flex-1">
           <a href="" className="btn text-xl btn-ghost">
             Reactsse
