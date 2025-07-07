@@ -4,8 +4,8 @@ import './index.css';
 // Import the generated route tree
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import ReactDOM from 'react-dom/client';
-import { routeTree } from './routeTree.gen';
 import { AuthProvider, useAuth } from './auth';
+import { routeTree } from './routeTree.gen';
 
 // Create a new router instance
 const router = createRouter({

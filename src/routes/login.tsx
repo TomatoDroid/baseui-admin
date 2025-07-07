@@ -1,10 +1,10 @@
-import { createFileRoute, useRouter, redirect, useRouterState } from '@tanstack/react-router';
-import { useAuth } from '../auth';
+import { createFileRoute, redirect, useRouter, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
-import { sleep } from '../utils';
 import z from 'zod';
+import { useAuth } from '../auth';
+import { sleep } from '../utils';
 
-const fallback = '/index' as const;
+const fallback = '/dashboard' as const;
 
 export const Route = createFileRoute('/login')({
   validateSearch: z.object({
