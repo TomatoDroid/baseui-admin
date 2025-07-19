@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, useRouter } from '@tanstack/react-router';
 import { useAuth } from '../../auth';
 
-export const Route = createFileRoute('/_auth')({
+export const Route = createFileRoute('/_auth/')({
   beforeLoad: ({ context, location }) => {
     if (!context.auth.isAuthenticated) {
       throw redirect({
@@ -30,9 +30,9 @@ function RouteComponent() {
 
   return (
     <div>
-      <div className="mb-2 navbar border-b border-neutral bg-base-100">
+      <div className="navbar border-neutral bg-base-100 mb-2 border-b">
         <div className="flex-1">
-          <a href="" className="btn text-xl btn-ghost">
+          <a href="" className="btn btn-ghost text-xl">
             Reactsse
           </a>
         </div>
@@ -47,7 +47,7 @@ function RouteComponent() {
                 />
               </div>
             </div>
-            <ul tabIndex={0} className="dropdown-content menu z-1 mt-3 w-52 menu-sm rounded-box bg-base-100 p-2 shadow">
+            <ul tabIndex={0} className="dropdown-content menu menu-sm rounded-box bg-base-100 z-1 mt-3 w-52 p-2 shadow">
               <li>
                 <a className="justify-between">
                   Profile
