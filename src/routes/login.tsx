@@ -3,6 +3,10 @@ import { useState } from 'react';
 import z from 'zod';
 import { useAuth } from '../auth';
 import { sleep } from '../utils';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const fallback = '/dashboard' as const;
 
@@ -51,31 +55,41 @@ function RouteComponent() {
   const isLoggingIn = isLoading || isSubmitting;
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content w-96 flex-col">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-        </div>
-        <div className="card w-full max-w-sm shrink-0 bg-base-100 shadow-2xl">
-          <div className="card-body">
-            <form onSubmit={onSubmit}>
-              <fieldset className="fieldset">
-                <label className="label" htmlFor="username">
-                  Username
-                </label>
-                <input name="username" type="text" className="input" placeholder="Username" />
-                <label className="label" htmlFor="password">
-                  Password
-                </label>
-                <input name="password" type="password" className="input" placeholder="Password" />
-                <button type="submit" className="btn mt-4 btn-neutral">
-                  {isLoggingIn ? <span className="loading-spin loading"></span> : 'Login'}
-                </button>
-              </fieldset>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-[size:14px_24px]" />
+      <div className="absolute top-[50%] left-[50%] -z-10 h-[800px] w-[800px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-gradient-to-r from-violet-500/40 to-fuchsia-500/40 blur-3xl" />
+      <Card className="z-10 w-96">
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+          <CardDescription>Enter your credentials to access your account</CardDescription>
+        </CardHeader>
+        <form onSubmit={onSubmit}>
+          <CardContent className="mb-4">
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="username">Username</Label>
+                <Input id="username" name="username" placeholder="Enter your username" />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" name="password" type="password" placeholder="Enter your password" />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button className="w-full" type="submit" disabled={isLoggingIn}>
+              {isLoggingIn ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Logging in...
+                </div>
+              ) : (
+                'Login'
+              )}
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 }
