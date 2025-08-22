@@ -1,10 +1,24 @@
-import { Navbar } from '@/components/ui/shadcn-io/navbar-01';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, linkOptions } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const navigationLinks = linkOptions([
+  {
+    to: '/dashboard',
+    label: 'Dashboard',
+  },
+  {
+    to: '/about',
+    label: 'About',
+    activeOptions: {
+      exact: true,
+    },
+  },
+]);
+
 function RouteComponent() {
-  return <Navbar navigationLinks={[{ label: 'Dashboard', href: '/dashboard' }]}></Navbar>;
+  return <>index</>;
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { navigationLinks } from '@/routes';
+import { Link } from '@tanstack/react-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '../../button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '../../navigation-menu';
@@ -68,16 +70,9 @@ const HamburgerIcon = ({ className, ...props }: React.SVGAttributes<SVGElement>)
   </svg>
 );
 
-interface NavbarLink {
-  href: string;
-  label: string;
-  active?: boolean;
-}
-
 interface NavbarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: React.ReactNode;
   logoHref?: string;
-  navigationLinks: NavbarLink[];
   signInText?: string;
   signInHref?: string;
   ctaText?: string;
@@ -87,16 +82,9 @@ interface NavbarProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.Ref<HTMLElement>;
 }
 
-const defaultNavigationLinks: NavbarLink[] = [
-  { href: '#', label: 'Home', active: true },
-  { href: '#features', label: 'Features' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#about', label: 'About' },
-];
 export function Navbar({
   logo = <Logo />,
   logoHref = '#',
-  navigationLinks = defaultNavigationLinks,
   signInText = 'Sign In',
   signInHref = '#signin',
   ctaText = 'Get Started',
@@ -171,15 +159,15 @@ export function Navbar({
                   <NavigationMenuList className="flex-col items-start gap-1">
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
-                        <button
-                          onClick={e => e.preventDefault()}
+                        <Link
+                          {...link}
+                          activeProps={{ className: 'bg-accent text-accent-foreground' }}
                           className={cn(
-                            'flex w-full cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium no-underline transition-colors hover:bg-accent hover:text-accent-foreground',
-                            link.active ? 'bg-accent text-accent-foreground' : 'text-foreground/80',
+                            'group inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground/80 no-underline transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50',
                           )}
                         >
                           {link.label}
-                        </button>
+                        </Link>
                       </NavigationMenuItem>
                     ))}
                   </NavigationMenuList>
@@ -204,15 +192,15 @@ export function Navbar({
                 <NavigationMenuList className="gap-1">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index}>
-                      <button
+                      <Link
+                        {...link}
+                        activeProps={{ className: 'bg-accent text-accent-foreground' }}
                         className={cn(
-                          'group inline-flex h-9 w-max cursor-pointer items-center justify-center rounded-md px-4 py-2 text-sm font-medium no-underline transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50',
-                          link.active ? 'bg-accent text-accent-foreground' : 'text-foreground/80 hover:text-foreground',
+                          'group inline-flex h-9 w-max cursor-pointer items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground/80 no-underline transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50',
                         )}
-                        onClick={e => e.preventDefault()}
                       >
                         {link.label}
-                      </button>
+                      </Link>
                     </NavigationMenuItem>
                   ))}
                 </NavigationMenuList>
