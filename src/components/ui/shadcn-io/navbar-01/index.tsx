@@ -184,7 +184,9 @@ export function Navbar({
               <div className="text-2xl">
                 <a href={logoHref}>{logo}</a>
               </div>
-              <span className="hidden text-xl font-bold sm:inline-block">shadcn.io</span>
+              <span className="hidden text-xl font-bold sm:inline-block">
+                <Link to="/">shadcn.io</Link>
+              </span>
             </button>
             {/* Navigation menu */}
             {!isMobile && (

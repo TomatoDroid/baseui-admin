@@ -20,5 +20,5 @@ export const navigationLinks = linkOptions([
 ]);
 
 function RouteComponent() {
-  return <>index</>;
+  return <div className="container">index</div>;
 }
