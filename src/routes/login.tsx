@@ -1,12 +1,12 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { createFileRoute, redirect, useRouter, useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import z from 'zod';
 import { useAuth } from '../auth';
 import { sleep } from '../utils';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const fallback = '/dashboard' as const;
 
