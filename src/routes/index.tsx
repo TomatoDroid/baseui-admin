@@ -7,8 +7,8 @@ export const Route = createFileRoute('/')({
 // eslint-disable-next-line react-refresh/only-export-components
 export const navigationLinks = linkOptions([
   {
-    to: '/dashboard',
-    label: 'Dashboard',
+    to: '/stream',
+    label: 'Stream',
   },
   {
     to: '/about',
