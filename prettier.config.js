@@ -4,7 +4,9 @@
 const config = {
   semi: false,
   singleQuote: true,
-  trailingComma: "all",
-};
+  trailingComma: 'all',
+  tabWidth: 2,
+  useTabs: false,
+}
 
-export default config;
+export default config
