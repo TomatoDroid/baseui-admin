@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/card'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
+import { Analytics } from './components/analytics'
 
 export function Dashboard() {
   return (
@@ -183,9 +184,7 @@ export function Dashboard() {
               </div>
             </TabsContent>
             <TabsContent value={'analytics'} className={''}>
-              <div>
-                <h2 className="text-lg font-bold tracking-tight">Analytics</h2>
-              </div>
+              <Analytics />
             </TabsContent>
           </Tabs>
         </div>

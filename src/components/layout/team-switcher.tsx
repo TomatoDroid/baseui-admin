@@ -18,7 +18,6 @@ import {
   useSidebar,
 } from '../ui/sidebar'
 import { Team } from './types'
-import { Avatar, AvatarFallback, AvatarImage } from '../base/avatar'
 
 type TeamSwitcherProps = {
   teams: Team[]
@@ -49,7 +48,12 @@ export function TeamSwitcher({ teams }: TeamSwitcherProps) {
               </SidebarMenuButton>
             }
           />
-          <DropdownMenuPositioner align="start" sideOffset={4} side={isMobile ? 'bottom' : 'right'} className={'z-10'}>
+          <DropdownMenuPositioner
+            align="start"
+            sideOffset={4}
+            side={isMobile ? 'bottom' : 'right'}
+            className={'z-10'}
+          >
             <DropdownMenuContent className="min-w-56 rounded-lg">
               <DropdownMenuGroup>
                 <DropdownMenuLabel className={'text-xs text-muted-foreground'}>
