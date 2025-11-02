@@ -9,35 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-<<<<<<< HEAD
 import { Route as StreamRouteImport } from './routes/stream'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
-
-const StreamRoute = StreamRouteImport.update({
-  id: '/stream',
-  path: '/stream',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-=======
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
@@ -53,12 +26,21 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const StreamRoute = StreamRouteImport.update({
+  id: '/stream',
+  path: '/stream',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
->>>>>>> dbf11e43947cf692eeb378bd41d6c048b4f4f5c7
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
@@ -93,45 +75,6 @@ const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
   path: '/demo/form/address',
   getParentRoute: () => rootRouteImport,
 } as any)
-<<<<<<< HEAD
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
-  '/login': typeof LoginRoute
-  '/stream': typeof StreamRoute
-}
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
-  '/login': typeof LoginRoute
-  '/stream': typeof StreamRoute
-}
-export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
-  '/login': typeof LoginRoute
-  '/stream': typeof StreamRoute
-}
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/auth' | '/login' | '/stream'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/auth' | '/login' | '/stream'
-  id: '__root__' | '/' | '/about' | '/auth' | '/login' | '/stream'
-  fileRoutesById: FileRoutesById
-}
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  AuthRoute: typeof AuthRoute
-  LoginRoute: typeof LoginRoute
-  StreamRoute: typeof StreamRoute
-=======
 const DemoApiTqTodosRoute = DemoApiTqTodosRouteImport.update({
   id: '/demo/api/tq-todos',
   path: '/demo/api/tq-todos',
@@ -164,6 +107,8 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/auth': typeof AuthRoute
+  '/stream': typeof StreamRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthenticatedIndexRoute
@@ -179,6 +124,8 @@ export interface FileRoutesByFullPath {
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
 }
 export interface FileRoutesByTo {
+  '/auth': typeof AuthRoute
+  '/stream': typeof StreamRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof AuthenticatedIndexRoute
@@ -196,6 +143,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/stream': typeof StreamRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -213,6 +162,8 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/auth'
+    | '/stream'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/'
@@ -228,6 +179,8 @@ export interface FileRouteTypes {
     | '/demo/start/ssr'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/auth'
+    | '/stream'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/'
@@ -244,6 +197,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/auth'
+    | '/stream'
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/_authenticated/'
@@ -261,6 +216,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  StreamRoute: typeof StreamRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
@@ -273,24 +230,15 @@ export interface RootRouteChildren {
   DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
   DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
   DemoStartSsrIndexRoute: typeof DemoStartSsrIndexRoute
->>>>>>> dbf11e43947cf692eeb378bd41d6c048b4f4f5c7
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-<<<<<<< HEAD
     '/stream': {
       id: '/stream'
       path: '/stream'
       fullPath: '/stream'
       preLoaderRoute: typeof StreamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -300,18 +248,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-=======
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
->>>>>>> dbf11e43947cf692eeb378bd41d6c048b4f4f5c7
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/': {
@@ -377,8 +318,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoApiNamesRouteImport
       parentRoute: typeof rootRouteImport
     }
-<<<<<<< HEAD
-=======
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/demo/start/ssr'
@@ -407,7 +346,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
       parentRoute: typeof rootRouteImport
     }
->>>>>>> dbf11e43947cf692eeb378bd41d6c048b4f4f5c7
   }
 }
 
@@ -423,14 +361,9 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-<<<<<<< HEAD
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  AuthRoute: AuthRoute,
-  LoginRoute: LoginRoute,
-  StreamRoute: StreamRoute,
-=======
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  StreamRoute: StreamRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
@@ -443,7 +376,6 @@ const rootRouteChildren: RootRouteChildren = {
   DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
   DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,
   DemoStartSsrIndexRoute: DemoStartSsrIndexRoute,
->>>>>>> dbf11e43947cf692eeb378bd41d6c048b4f4f5c7
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

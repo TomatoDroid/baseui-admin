@@ -1,10 +1,11 @@
-import { Outlet } from "@tanstack/react-router";
-import { SidebarInset, SidebarProvider } from "../ui/sidebar";
-import { AppSidebar } from "./app-sidebar";
+import { Outlet } from '@tanstack/react-router'
+import { SidebarInset, SidebarProvider } from '../ui/sidebar'
+import { AppSidebar } from './app-sidebar'
+import { cn } from '@/lib/utils'
 
 export function AuthenticatedLayout() {
   return (
-    <SidebarProvider defaultOpen>
+    <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
         <Outlet />

@@ -1,4 +1,4 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "../ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "../ui/sidebar";
 import { sidebarData } from "./data/sidebar-data";
 import { NavGroup } from "./nav-group";
 import { NavUser } from "./nav-user";
@@ -6,7 +6,7 @@ import { TeamSwitcher } from "./team-switcher";
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <TeamSwitcher teams={sidebarData.teams} />
       </SidebarHeader >
@@ -20,6 +20,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <NavUser user={sidebarData.user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   )
 }

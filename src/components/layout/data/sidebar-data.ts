@@ -23,6 +23,7 @@ import {
   Wrench,
 } from 'lucide-react'
 import { SidebarData } from '../types'
+import { ClerkLogo } from '@/assets/clerk-logo'
 
 export const sidebarData: SidebarData = {
   user: {
@@ -79,7 +80,7 @@ export const sidebarData: SidebarData = {
         },
         {
           title: "Secured by Clerk",
-          // icon: Clock,
+          icon: ClerkLogo,
           items: [
             {
               title: 'Sign In',
