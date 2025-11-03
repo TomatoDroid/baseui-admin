@@ -6,6 +6,7 @@ import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
 import TasksPrimaryButtons from "./components/tasks-primary-buttons";
 import { TasksProvider } from "./components/tasks-provider";
+import { TasksTable } from "./components/tasks-table";
 
 export function Tasks() {
   return (
@@ -27,6 +28,7 @@ export function Tasks() {
           </div>
           <TasksPrimaryButtons />
         </div>
+        <TasksTable />
       </Main>
     </TasksProvider>
   )
