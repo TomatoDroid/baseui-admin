@@ -1,3 +1,5 @@
+import { DataTablePagination } from '@/components/data-table/pagination'
+import { DataTableToolbar } from '@/components/data-table/toolbar'
 import {
   Table,
   TableBody,
@@ -6,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Task } from '../data/schema'
+import { cn } from '@/lib/utils'
 import {
   flexRender,
   getCoreRowModel,
@@ -19,9 +21,11 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table'
-import { tasksColumns as columns } from './tasks-columns'
 import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import { priorities, statuses } from '../data/dara'
+import { Task } from '../data/schema'
+import { DataTableBulkActions } from './data-table-bulk-actions'
+import { tasksColumns as columns } from './tasks-columns'
 
 type TasksTableProps = {
   data: Task[]
@@ -57,11 +61,27 @@ export function TasksTable({ data }: TasksTableProps) {
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    debugAll: true,
   })
 
   return (
-    <div>
-      <div>
+    <div className='flex flex-col gap-4'>
+      <DataTableToolbar table={table}
+        searchPlaceholder='Filter by title or ID...'
+        filters={[
+          {
+            columnId: "status",
+            title: "Status",
+            options: statuses
+          },
+          {
+            columnId: "priority",
+            title: "Priority",
+            options: priorities
+          }
+        ]}
+      />
+      <div className='border rounded-md overflow-hidden'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -78,9 +98,9 @@ export function TasksTable({ data }: TasksTableProps) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -89,7 +109,10 @@ export function TasksTable({ data }: TasksTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow>
+                <TableRow
+                  key={row.id}
+                  data-selected={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
@@ -119,8 +142,8 @@ export function TasksTable({ data }: TasksTableProps) {
           </TableBody>
         </Table>
       </div>
-      <></>
-      <></>
+      <DataTablePagination table={table} className='' />
+      <DataTableBulkActions table={table} />
     </div>
   )
 }

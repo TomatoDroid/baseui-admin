@@ -7,6 +7,7 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import TasksPrimaryButtons from "./components/tasks-primary-buttons";
 import { TasksProvider } from "./components/tasks-provider";
 import { TasksTable } from "./components/tasks-table";
+import { tasks } from "./data/tasks";
 
 export function Tasks() {
   return (
@@ -20,7 +21,7 @@ export function Tasks() {
         </div>
       </Header>
 
-      <Main>
+      <Main className="flex flex-col gap-4 sm:gap-6">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">Tasks</h2>
@@ -28,7 +29,7 @@ export function Tasks() {
           </div>
           <TasksPrimaryButtons />
         </div>
-        <TasksTable />
+        <TasksTable data={tasks} />
       </Main>
     </TasksProvider>
   )
