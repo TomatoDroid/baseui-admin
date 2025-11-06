@@ -1,5 +1,6 @@
 import React from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./base/alert-dialog";
+import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./base/alert-dialog";
+import { Button } from "./base/button";
 
 type ConfirmDialogProps = {
   open: boolean;
@@ -26,6 +27,7 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
     isLoading = false,
     className,
     children,
+    disabled = false,
     ...actions
   } = props
   return (
@@ -40,7 +42,13 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
         {children}
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading}>{cancelBtnText}</AlertDialogCancel>
-          <AlertDialogAction>{confirmText}</AlertDialogAction>
+          <Button
+            variant={destructive ? "destructive" : "default"}
+            disabled={disabled || isLoading}
+            onClick={handleConfirm}
+          >
+            {confirmText}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

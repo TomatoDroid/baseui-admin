@@ -9,6 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
+import { rankItem } from '@tanstack/match-sorter-utils'
 import {
   flexRender,
   getCoreRowModel,
@@ -19,10 +20,10 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
-  VisibilityState,
+  VisibilityState
 } from '@tanstack/react-table'
 import { useState } from 'react'
-import { priorities, statuses } from '../data/dara'
+import { priorities, statuses } from '../data/data'
 import { Task } from '../data/schema'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { tasksColumns as columns } from './tasks-columns'
@@ -30,7 +31,19 @@ import { tasksColumns as columns } from './tasks-columns'
 type TasksTableProps = {
   data: Task[]
 }
+// Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
+const fuzzyFilter = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value)
 
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  })
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed
+}
 export function TasksTable({ data }: TasksTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
@@ -45,23 +58,19 @@ export function TasksTable({ data }: TasksTableProps) {
       rowSelection,
     },
     enableRowSelection: true,
-    onRowPinningChange: setRowSelection,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
-    globalFilterFn: (row, _columnId, filterValue) => {
-      const id = String(row.getValue('id')).toLowerCase()
-      const title = String(row.getValue('title')).toLowerCase()
-      const searchValue = String(filterValue).toLowerCase()
-
-      return id.includes(searchValue) || title.includes(searchValue)
-    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    debugAll: true,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+    globalFilterFn: 'fuzzy',
   })
 
   return (
@@ -142,7 +151,7 @@ export function TasksTable({ data }: TasksTableProps) {
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} className='' />
+      <DataTablePagination table={table} className='mt-auto' />
       <DataTableBulkActions table={table} />
     </div>
   )

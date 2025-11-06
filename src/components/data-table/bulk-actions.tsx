@@ -30,6 +30,14 @@ export function BulkActionsToolbar<TData>({
   const selectedRows = table.getFilteredSelectedRowModel().rows
   const selectedCount = selectedRows.length
 
+  const handleClearSelection = () => {
+    table.resetRowSelection()
+  }
+
+  if (selectedCount === 0) {
+    return null
+  }
+
   return (
     <div className={cn(
       "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl",
@@ -48,7 +56,7 @@ export function BulkActionsToolbar<TData>({
                 variant={"outline"}
                 aria-label="Clear selection"
                 title="Clear selection (Escape)"
-                onClick={() => { }}
+                onClick={handleClearSelection}
                 className="size-6 rounded-full"
               >
                 <X />

@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositi
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Row } from "@tanstack/react-table"
 import { Trash2 } from "lucide-react"
-import { labels } from "../data/dara"
+import { labels } from "../data/data"
 import { taskSchema } from "../data/schema"
 import { useTasks } from "./tasks-provider"
 

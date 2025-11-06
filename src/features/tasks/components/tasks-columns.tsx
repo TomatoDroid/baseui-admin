@@ -1,7 +1,7 @@
 import { Badge } from "@/components/base/badge";
 import { Checkbox } from "@/components/base/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { labels, priorities, statuses } from "../data/dara";
+import { labels, priorities, statuses } from "../data/data";
 import { Task } from "../data/schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 
@@ -23,7 +23,6 @@ export const tasksColumns: ColumnDef<Task>[] = [
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => {
-          debugger
           row.toggleSelected(value)
         }}
         aria-label="Select row"
