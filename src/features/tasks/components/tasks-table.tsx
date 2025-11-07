@@ -8,8 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useTableUrlState } from '@/hooks/use-table-url-state'
 import { cn } from '@/lib/utils'
 import { rankItem } from '@tanstack/match-sorter-utils'
+import { getRouteApi } from '@tanstack/react-router'
 import {
   flexRender,
   getCoreRowModel,
@@ -22,7 +24,7 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { priorities, statuses } from '../data/data'
 import { Task } from '../data/schema'
 import { DataTableBulkActions } from './data-table-bulk-actions'
@@ -44,10 +46,37 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
   // Return if the item should be filtered in/out
   return itemRank.passed
 }
+
+const route = getRouteApi("/_authenticated/tasks/")
 export function TasksTable({ data }: TasksTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+
+  const {
+    globalFilter,
+    onGlobalFilterChange,
+    pagination,
+    onPaginationChange,
+    columnFilters,
+    onColumnFiltersChange,
+    ensurePageInRange
+  } = useTableUrlState({
+    search: route.useSearch(),
+    navigate: route.useNavigate(),
+    pagination: {
+      defaultPage: 1,
+      defaultPageSize: 10
+    },
+    globalFilter: {
+      enabled: true,
+      key: "filter"
+    },
+    columnFilters: [
+      { columnId: "status", searchKey: "status", type: "array" },
+      { columnId: "priority", searchKey: "priority", type: "array" }
+    ]
+  })
 
   const table = useReactTable({
     data,
@@ -56,6 +85,9 @@ export function TasksTable({ data }: TasksTableProps) {
       sorting,
       columnVisibility,
       rowSelection,
+      columnFilters,
+      globalFilter,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -71,7 +103,15 @@ export function TasksTable({ data }: TasksTableProps) {
       fuzzy: fuzzyFilter,
     },
     globalFilterFn: 'fuzzy',
+    onColumnFiltersChange,
+    onGlobalFilterChange,
+    onPaginationChange
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    ensurePageInRange(pageCount)
+  }, [pageCount, ensurePageInRange])
 
   return (
     <div className='flex flex-col gap-4'>

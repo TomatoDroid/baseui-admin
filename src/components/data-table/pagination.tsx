@@ -28,7 +28,10 @@ export function DataTablePagination<TData>({
           Page{currentPage} of {totalPages}
         </div>
         <div className="flex items-center gap-2 @max-2xl/content:flex-row-reverse">
-          <Select>
+          <Select
+            value={`${table.getState().pagination.pageSize}`}
+            onValueChange={(value) => table.setPageSize(Number(value))}
+          >
             <SelectTrigger className={"h-8 w-20"}>
               <SelectValue placeholder={table.getState().pagination.pageSize + ''} />
             </SelectTrigger>
