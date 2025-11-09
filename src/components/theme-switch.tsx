@@ -8,10 +8,16 @@ import {
   DropdownMenuTrigger,
 } from './base/dropdown-menu'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { useTheme } from '@/context/theme-provider'
+import { useEffect } from 'react'
 
 export function ThemeSwitch() {
-  const [theme, setTheme] = useState('light')
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -28,7 +34,7 @@ export function ThemeSwitch() {
         }
       />
       <DropdownMenuPositioner align="end">
-        <DropdownMenuContent>
+        <DropdownMenuContent className={"z-100"}>
           <DropdownMenuItem
             onClick={() => {
               setTheme('light')
