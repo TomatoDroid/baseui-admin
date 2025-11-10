@@ -13,9 +13,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
         checked={table.getIsAllPageRowsSelected()}
         indeterminate={table.getIsSomePageRowsSelected()}
         onCheckedChange={(value) => {
-          console.log(table.getIsAllPageRowsSelected())
           table.toggleAllPageRowsSelected(value)
-          console.log('res', table.getIsAllPageRowsSelected())
         }}
       />
     ),
