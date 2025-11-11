@@ -1,15 +1,24 @@
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositioner, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/ui/tooltip"
-import { BulkActionsToolbar } from "@/components/data-table/bulk-actions"
-import { sleep } from "@/lib/utils"
-import { Table } from "@tanstack/react-table"
-import { ArrowUpDown, CircleArrowUp, Download, Trash2 } from "lucide-react"
-import { useState } from "react"
-import { toast } from "sonner"
-import { priorities, statuses } from "../data/data"
-import { Task } from "../data/schema"
-import { DataMultiDeleteDialog } from "./data-multi-delete-dialog"
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { BulkActionsToolbar } from '@/components/data-table/bulk-actions'
+import { sleep } from '@/lib/utils'
+import { Table } from '@tanstack/react-table'
+import { ArrowUpDown, CircleArrowUp, Download, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { priorities, statuses } from '../data/data'
+import { Task } from '../data/schema'
+import { DataMultiDeleteDialog } from './data-multi-delete-dialog'
 
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
@@ -64,133 +73,116 @@ export function DataTableBulkActions<TData>({
       <BulkActionsToolbar table={table} entityName="task">
         <DropdownMenu modal={false}>
           <Tooltip>
-            <TooltipTrigger
-              render={
-                <DropdownMenuTrigger
-                  render={
-                    <Button
-                      variant={"outline"}
-                      size={"icon"}
-                      className="size-8"
-                      aria-label='Update status'
-                      title='Update status'
-                    >
-                      <CircleArrowUp />
-                      <span className='sr-only'>Update status</span>
-                    </Button>
-                  }
-                />
-              }
-            />
-            <TooltipPositioner>
-              <TooltipContent>
-                <p>Update status</p>
-              </TooltipContent>
-            </TooltipPositioner>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant={'outline'}
+                  size={'icon'}
+                  className="size-8"
+                  aria-label="Update status"
+                  title="Update status"
+                >
+                  <CircleArrowUp />
+                  <span className="sr-only">Update status</span>
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Update status</p>
+            </TooltipContent>
           </Tooltip>
-          <DropdownMenuPositioner sideOffset={14}>
-            <DropdownMenuContent>
-              {
-                statuses.map((status) => (
-                  <DropdownMenuItem
-                    key={status.value}
-                    onClick={() => handleBulkStatusChange(status.value)}
-                  >
-                    {status.icon && <status.icon className="text-muted-foreground" />}
-                    {status.label}
-                  </DropdownMenuItem>
-                ))
-              }
-            </DropdownMenuContent>
-          </DropdownMenuPositioner>
+          <DropdownMenuContent sideOffset={14}>
+            {statuses.map((status) => (
+              <DropdownMenuItem
+                key={status.value}
+                onClick={() => handleBulkStatusChange(status.value)}
+              >
+                {status.icon && (
+                  <status.icon className="text-muted-foreground" />
+                )}
+                {status.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
         </DropdownMenu>
 
         <DropdownMenu>
           <Tooltip>
-            <TooltipTrigger
-              render={
-                <DropdownMenuTrigger
-                  render={
-                    <Button
-                      variant={"outline"}
-                      size={"icon"}
-                      className="size-8"
-                      aria-label='Update priority'
-                      title='Update priority'
-                    >
-                      <ArrowUpDown />
-                      <span className="sr-only">Update priority</span>
-                    </Button>
-                  }
-                />
-              }
-            />
-            <TooltipPositioner>
-              <TooltipContent>Update priority</TooltipContent>
-            </TooltipPositioner>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant={'outline'}
+                  size={'icon'}
+                  className="size-8"
+                  aria-label="Update priority"
+                  title="Update priority"
+                >
+                  <ArrowUpDown />
+                  <span className="sr-only">Update priority</span>
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>Update priority</TooltipContent>
           </Tooltip>
-          <DropdownMenuPositioner sideOffset={14}>
-            <DropdownMenuContent>
-              {
-                priorities.map((priority) => (
-                  <DropdownMenuItem key={priority.value} onClick={() => handleBulkPriorityChange(priority.value)}>
-                    {priority.icon && <priority.icon className="text-muted-foreground" />}
-                    {priority.label}
-                  </DropdownMenuItem>
-                ))
-              }
-            </DropdownMenuContent>
-          </DropdownMenuPositioner>
+          {/* 将 sideOffset 从 Positioner 移到 Content */}
+          <DropdownMenuContent sideOffset={14}>
+            {priorities.map((priority) => (
+              <DropdownMenuItem
+                key={priority.value}
+                onClick={() => handleBulkPriorityChange(priority.value)}
+              >
+                {priority.icon && (
+                  <priority.icon className="text-muted-foreground" />
+                )}
+                {priority.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
         </DropdownMenu>
 
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant={"outline"}
-                size={"icon"}
-                className="size-8"
-                aria-label="Export tasks"
-                title="Export tasks"
-                onClick={handleBulkExport}
-              >
-                <Download />
-                <span className="sr-only">Export tasks</span>
-              </Button>
-            }
-          />
-          <TooltipPositioner>
-            <TooltipContent>
-              <p>Export tasks</p>
-            </TooltipContent>
-          </TooltipPositioner>
+          <TooltipTrigger asChild>
+            <Button
+              variant={'outline'}
+              size={'icon'}
+              className="size-8"
+              aria-label="Export tasks"
+              title="Export tasks"
+              onClick={handleBulkExport}
+            >
+              <Download />
+              <span className="sr-only">Export tasks</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Export tasks</p>
+          </TooltipContent>
         </Tooltip>
-
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant={"destructive"}
-                size={"icon"}
-                className="size-8"
-                aria-label='Delete selected tasks'
-                title='Delete selected tasks'
-                onClick={() => setShowDeleteConfirm(true)}
-              >
-                <Trash2 />
-                <span className="sr-only">Delete selected tasks</span>
-              </Button>
-            }
-          />
-          <TooltipPositioner>
-            <TooltipContent>
-              <p>Delete selected tasks</p>
-            </TooltipContent>
-          </TooltipPositioner>
+          <TooltipTrigger asChild>
+            <Button
+              variant={'destructive'}
+              size={'icon'}
+              className="size-8"
+              aria-label="Delete selected tasks"
+              title="Delete selected tasks"
+              onClick={() => setShowDeleteConfirm(true)}
+            >
+              <Trash2 />
+              <span className="sr-only">Delete selected tasks</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Delete selected tasks</p>
+          </TooltipContent>
         </Tooltip>
       </BulkActionsToolbar>
 
-      <DataMultiDeleteDialog table={table} open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm} />
+      <DataMultiDeleteDialog
+        table={table}
+        open={showDeleteConfirm}
+        onOpenChange={setShowDeleteConfirm}
+      />
     </>
   )
 }

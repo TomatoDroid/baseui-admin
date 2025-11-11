@@ -4,7 +4,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectPositioner,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -123,37 +122,36 @@ export function Apps() {
               <SelectTrigger className={'w-36'}>
                 <SelectValue>{appText.get(appType)}</SelectValue>
               </SelectTrigger>
-              <SelectPositioner>
-                <SelectContent>
-                  <SelectItem value="all">All Apps</SelectItem>
-                  <SelectItem value="connected">Connected</SelectItem>
-                  <SelectItem value="notConnected">Not Connected</SelectItem>
-                </SelectContent>
-              </SelectPositioner>
+              <SelectContent>
+                <SelectItem value="all">All Apps</SelectItem>
+                <SelectItem value="connected">Connected</SelectItem>
+                <SelectItem value="notConnected">Not Connected</SelectItem>
+              </SelectContent>
             </Select>
           </div>
-          <Select value={sort} onValueChange={(v) => handleSortChange(v as 'asc' | 'desc')}>
+          <Select
+            value={sort}
+            onValueChange={(v) => handleSortChange(v as 'asc' | 'desc')}
+          >
             <SelectTrigger className={'w-16'}>
               <SelectValue>
                 <SlidersHorizontal />
               </SelectValue>
             </SelectTrigger>
-            <SelectPositioner align="end">
-              <SelectContent>
-                <SelectItem value="asc">
-                  <div className="flex items-center gap-4">
-                    <ArrowUpAZ />
-                    <span>Ascending</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="desc">
-                  <div className="flex items-center gap-4">
-                    <ArrowDownZA />
-                    <span>Descending</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </SelectPositioner>
+            <SelectContent align="end">
+              <SelectItem value="asc">
+                <div className="flex items-center gap-4">
+                  <ArrowUpAZ />
+                  <span>Ascending</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="desc">
+                <div className="flex items-center gap-4">
+                  <ArrowDownZA />
+                  <span>Descending</span>
+                </div>
+              </SelectItem>
+            </SelectContent>
           </Select>
         </div>
         <Separator className={'shadow-sm'} />

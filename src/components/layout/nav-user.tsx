@@ -15,7 +15,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPositioner,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
@@ -30,98 +29,87 @@ export function NavUser({ user }: { user: User }) {
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <SidebarMenuButton
-                  className="data-popup-open:bg-sidebar-accent data-popup-open:text-sidebar-accent-foreground"
-                  size={'lg'}
-                >
-                  <Avatar className="size-8 rounded-lg">
-                    <AvatarImage
-                      src={user.avatar}
-                      alt={user.name}
-                    ></AvatarImage>
-                    <AvatarFallback className={"rounded-lg"}>LZ</AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-start text-sm leading-tight">
-                    <span className="truncate font-semibold">{user.name}</span>
-                    <span className="truncate text-xs">{user.email}</span>
-                  </div>
-                  <ChevronsUpDown className="size-4 ms-auto" />
-                </SidebarMenuButton>
-              }
-            />
-            <DropdownMenuPositioner side="right" align="end">
-              <DropdownMenuContent className={"min-w-56 rounded-lg"}>
-                <DropdownMenuGroup className={"p-0 font-normal"}>
-                  <DropdownMenuLabel>
-                    <div className="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                      <Avatar className={"rounded-lg size-8"}>
-                        <AvatarImage
-                          src={user.avatar}
-                          alt={user.name}
-                        ></AvatarImage>
-                        <AvatarFallback>LZ</AvatarFallback>
-                      </Avatar>
-                      <div className="grid flex-1 text-start text-sm leading-tight">
-                        <span className="truncate font-semibold">
-                          {user.name}
-                        </span>
-                        <span className="truncate text-xs">{user.email}</span>
-                      </div>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                className="data-popup-open:bg-sidebar-accent data-popup-open:text-sidebar-accent-foreground"
+                size={'lg'}
+              >
+                <Avatar className="size-8 rounded-lg">
+                  <AvatarImage src={user.avatar} alt={user.name}></AvatarImage>
+                  <AvatarFallback className={'rounded-lg'}>LZ</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-start text-sm leading-tight">
+                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate text-xs">{user.email}</span>
+                </div>
+                <ChevronsUpDown className="size-4 ms-auto" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className={'min-w-56 rounded-lg'}
+              side="right"
+              align="end"
+            >
+              <DropdownMenuGroup className={'p-0 font-normal'}>
+                <DropdownMenuLabel>
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                    <Avatar className={'rounded-lg size-8'}>
+                      <AvatarImage
+                        src={user.avatar}
+                        alt={user.name}
+                      ></AvatarImage>
+                      <AvatarFallback>LZ</AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-start text-sm leading-tight">
+                      <span className="truncate font-semibold">
+                        {user.name}
+                      </span>
+                      <span className="truncate text-xs">{user.email}</span>
                     </div>
-                  </DropdownMenuLabel>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    render={
-                      <Link to="/">
-                        <Sparkles />
-                        Upgrade to Pro
-                      </Link>
-                    }
-                  ></DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    render={
-                      <Link to="/">
-                        <BadgeCheck />
-                        Account
-                      </Link>
-                    }
-                  />
-                  <DropdownMenuItem
-                    render={
-                      <Link to="/">
-                        <CreditCard />
-                        Billing
-                      </Link>
-                    }
-                  />
-                  <DropdownMenuItem
-                    render={
-                      <Link to="/">
-                        <Bell />
-                        Notifications
-                      </Link>
-                    }
-                  />
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onClick={() => setOpen(false)}
-                    variant="destructive"
-                  >
-                    <LogOut />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenuPositioner>
+                  </div>
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link to="/">
+                    <Sparkles />
+                    Upgrade to Pro
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link to="/">
+                    <BadgeCheck />
+                    Account
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/">
+                    <CreditCard />
+                    Billing
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/">
+                    <Bell />
+                    Notifications
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  onClick={() => setOpen(false)}
+                  variant="destructive"
+                >
+                  <LogOut />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>

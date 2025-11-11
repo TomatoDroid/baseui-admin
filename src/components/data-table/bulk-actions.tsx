@@ -1,11 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
-import { Table } from "@tanstack/react-table"
-import { X } from "lucide-react"
-import React from "react"
-import { Badge } from "../base/badge"
-import { Separator } from "../base/separator"
+import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
+import { Table } from '@tanstack/react-table'
+import { X } from 'lucide-react'
+import React from 'react'
+import { Badge } from '../ui/badge'
+import { Separator } from '../ui/separator'
 
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
@@ -39,51 +43,63 @@ export function BulkActionsToolbar<TData>({
   }
 
   return (
-    <div className={cn(
-      "fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl",
-      "transition-all delay-100 duration-300 ease-out hover:scale-105"
-    )}>
-      <div className={cn(
-        "rounded-xl border p-2 shadow-xl",
-        "bg-background/95 supports-backdrop-filter:bg-background/60 backdrop-blur-lg",
-        "flex items-center gap-2"
-      )}>
+    <div
+      className={cn(
+        'fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl',
+        'transition-all delay-100 duration-300 ease-out hover:scale-105',
+      )}
+    >
+      <div
+        className={cn(
+          'rounded-xl border p-2 shadow-xl',
+          'bg-background/95 supports-backdrop-filter:bg-background/60 backdrop-blur-lg',
+          'flex items-center gap-2',
+        )}
+      >
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                size={"icon"}
-                variant={"outline"}
-                aria-label="Clear selection"
-                title="Clear selection (Escape)"
-                onClick={handleClearSelection}
-                className="size-6 rounded-full"
-              >
-                <X />
-                <span className="sr-only">Clear selection</span>
-              </Button>
-            }
-          />
-          <TooltipPositioner>
-            <TooltipContent>
-              <p>Clear selection (Escape)</p>
-            </TooltipContent>
-          </TooltipPositioner>
+          <TooltipTrigger asChild>
+            <Button
+              size={'icon'}
+              variant={'outline'}
+              aria-label="Clear selection"
+              title="Clear selection (Escape)"
+              onClick={handleClearSelection}
+              className="size-6 rounded-full"
+            >
+              <X />
+              <span className="sr-only">Clear selection</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Clear selection (Escape)</p>
+          </TooltipContent>
         </Tooltip>
 
-        <Separator orientation="vertical" className={"h-5"} aria-hidden="true" />
+        <Separator
+          orientation="vertical"
+          className={'h-5'}
+          aria-hidden="true"
+        />
 
         <div className="flex items-center gap-1 text-sm">
-          <Badge variant={"default"} className="rounded-lg min-w-8" aria-label={`${selectedCount} selected`}>
+          <Badge
+            variant={'default'}
+            className="rounded-lg min-w-8"
+            aria-label={`${selectedCount} selected`}
+          >
             {selectedCount}
-          </Badge>{" "}
+          </Badge>{' '}
           <span className="hidden sm:inline">
             {entityName}
-            {selectedCount > 1 ? "s" : ""}
-          </span>{" "}
+            {selectedCount > 1 ? 's' : ''}
+          </span>{' '}
           selected
         </div>
-        <Separator orientation="vertical" className={"h-5"} aria-hidden="true" />
+        <Separator
+          orientation="vertical"
+          className={'h-5'}
+          aria-hidden="true"
+        />
         {children}
       </div>
     </div>

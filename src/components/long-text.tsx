@@ -1,14 +1,23 @@
-import { cn } from "@/lib/utils";
-import { PropsWithChildren, useRef, useState } from "react";
-import { Popover, PopoverContent, PopoverPositioner, PopoverTrigger } from "./base/popover";
-import { Tooltip, TooltipContent, TooltipPositioner, TooltipProvider, TooltipTrigger } from "./base/tooltip";
+import { cn } from '@/lib/utils'
+import { PropsWithChildren, useRef, useState } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip'
 
 type LongTextProps = PropsWithChildren<{
   className?: string
   contentClassName?: string
 }>
 
-export function LongText({ children, className, contentClassName }: LongTextProps) {
+export function LongText({
+  children,
+  className,
+  contentClassName,
+}: LongTextProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isOverflown, setIsOverflown] = useState(false)
 
@@ -21,7 +30,7 @@ export function LongText({ children, className, contentClassName }: LongTextProp
 
   if (!isOverflown) {
     return (
-      <div className={cn("truncate", className)} ref={refCallback}>
+      <div className={cn('truncate', className)} ref={refCallback}>
         {children}
       </div>
     )
@@ -29,38 +38,30 @@ export function LongText({ children, className, contentClassName }: LongTextProp
 
   return (
     <>
-      <div className='hidden sm:block'>
-        <TooltipProvider delay={0}>
+      <div className="hidden sm:block">
+        <TooltipProvider delayDuration={0}>
           <Tooltip>
-            <TooltipTrigger
-              render={
-                <div ref={refCallback} className={cn('truncate', className)}>
-                  {children}
-                </div>
-              }
-            />
-            <TooltipPositioner>
-              <TooltipContent>
-                <p className={contentClassName}>{children}</p>
-              </TooltipContent>
-            </TooltipPositioner>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
-      <div className='sm:hidden'>
-        <Popover>
-          <PopoverTrigger
-            render={
+            <TooltipTrigger asChild>
               <div ref={refCallback} className={cn('truncate', className)}>
                 {children}
               </div>
-            }
-          />
-          <PopoverPositioner>
-            <PopoverContent className={cn('w-fit', contentClassName)}>
-              <p>{children}</p>
-            </PopoverContent>
-          </PopoverPositioner>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p className={contentClassName}>{children}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+      <div className="sm:hidden">
+        <Popover>
+          <PopoverTrigger asChild>
+            <div ref={refCallback} className={cn('truncate', className)}>
+              {children}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className={cn('w-fit', contentClassName)}>
+            <p>{children}</p>
+          </PopoverContent>
         </Popover>
       </div>
     </>
