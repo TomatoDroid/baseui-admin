@@ -68,7 +68,6 @@ export function LongText({ children, className, contentClassName }: LongTextProp
 }
 
 function checkOverflow(textContainer: HTMLDivElement | null) {
-  debugger
   if (textContainer) {
     return (
       textContainer.offsetHeight < textContainer.scrollHeight ||

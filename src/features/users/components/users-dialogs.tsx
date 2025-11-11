@@ -1,7 +1,15 @@
-export function UsersDialogs() {
-  return (
-    <div>
+import { UsersActionDialog } from "./users-action-dialog"
+import { useUsers } from "./users-provider"
 
-    </div>
+export function UsersDialogs() {
+  const { open, setOpen, currentRow, setCurrentRow } = useUsers()
+  return (
+    <>
+      <UsersActionDialog
+        key={"user-add"}
+        open={open === "add"}
+        onOpenChange={() => setOpen("add")}
+      />
+    </>
   )
 }

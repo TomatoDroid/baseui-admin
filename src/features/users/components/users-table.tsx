@@ -1,11 +1,12 @@
 import { DataTablePagination } from "@/components/data-table/pagination"
 import { DataTableToolbar } from "@/components/data-table/toolbar"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { NavigateFn, useTableUrlState } from "@/hooks/use-table-url-state"
+import { useTableUrlState } from "@/hooks/use-table-url-state"
 import { cn } from "@/lib/utils"
 import { rankItem } from "@tanstack/match-sorter-utils"
+import { getRouteApi } from "@tanstack/react-router"
 import { flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable, VisibilityState } from "@tanstack/react-table"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { roles } from "../data/data"
 import { User } from "../data/schema"
 import { DataTableBulkActions } from "./data-table-bulk-actions"
@@ -13,9 +14,9 @@ import { UsersColumns as columns } from "./users-columns"
 
 type UsersTableProps = {
   data: User[]
-  search: Record<string, unknown>
-  navigate: NavigateFn
 }
+
+const route = getRouteApi("/_authenticated/users/")
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -32,9 +33,9 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 }
 export function UsersTable({
   data,
-  search,
-  navigate
 }: UsersTableProps) {
+  const search = route.useSearch()
+  const navigate = route.useNavigate()
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [sorting, setSorting] = useState<SortingState>([])
@@ -44,8 +45,6 @@ export function UsersTable({
     onColumnFiltersChange,
     pagination,
     onPaginationChange,
-    globalFilter,
-    onGlobalFilterChange,
     ensurePageInRange
   } = useTableUrlState({
     search,
@@ -91,6 +90,10 @@ export function UsersTable({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  useEffect(() => {
+    ensurePageInRange(table.getPageCount())
+  }, [table, ensurePageInRange])
 
   return (
     <div className="flex flex-1 flex-col gap-4 max-sm:has-[div[role='toolbar']]:mb-16">

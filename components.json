@@ -12,13 +12,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/components/base",
+    "components": "@/components",
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
-  },
-  "registries": {
-    "@basecn": "https://basecn.dev/r/{name}.json"
   }
 }

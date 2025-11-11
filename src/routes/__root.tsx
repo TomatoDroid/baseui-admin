@@ -11,8 +11,9 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import { Toaster } from '@/components/ui/sonner'
-import type { QueryClient } from '@tanstack/react-query'
 import { ThemeProvider } from '@/context/theme-provider'
+import { FormDevtoolsPlugin } from "@tanstack/react-form-devtools"
+import type { QueryClient } from '@tanstack/react-query'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -64,6 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               render: <TanStackRouterDevtoolsPanel />,
             },
             TanStackQueryDevtools,
+            FormDevtoolsPlugin()
           ]}
         />
         <Scripts />
