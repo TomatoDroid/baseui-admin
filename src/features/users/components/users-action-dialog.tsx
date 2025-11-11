@@ -1,13 +1,30 @@
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import z from "zod"
-import { roles } from "../data/data"
-import { User } from "../data/schema"
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { useForm } from '@tanstack/react-form'
+import z from 'zod'
+import { roles } from '../data/data'
+import { User } from '../data/schema'
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field'
 
 type UsersActionDialogProps = {
   currentRow?: User
@@ -22,7 +39,7 @@ const formSchema = z
     username: z.string().min(1, 'Username is required.'),
     phoneNumber: z.string().min(1, 'Phone number is required.'),
     email: z.string().email({
-      message: "Please enter a valid email.",
+      message: 'Please enter a valid email.',
     }),
     password: z.string().transform((pwd) => pwd.trim()),
     role: z.string().min(1, 'Role is required.'),
@@ -37,7 +54,7 @@ const formSchema = z
     {
       message: 'Password is required.',
       path: ['password'],
-    }
+    },
   )
   .refine(
     ({ isEdit, password }) => {
@@ -47,7 +64,7 @@ const formSchema = z
     {
       message: 'Password must be at least 8 characters long.',
       path: ['password'],
-    }
+    },
   )
   .refine(
     ({ isEdit, password }) => {
@@ -57,7 +74,7 @@ const formSchema = z
     {
       message: 'Password must contain at least one lowercase letter.',
       path: ['password'],
-    }
+    },
   )
   .refine(
     ({ isEdit, password }) => {
@@ -67,7 +84,7 @@ const formSchema = z
     {
       message: 'Password must contain at least one number.',
       path: ['password'],
-    }
+    },
   )
   .refine(
     ({ isEdit, password, confirmPassword }) => {
@@ -77,18 +94,17 @@ const formSchema = z
     {
       message: "Passwords don't match.",
       path: ['confirmPassword'],
-    }
+    },
   )
 
 export function UsersActionDialog({
   currentRow,
   open,
-  onOpenChange
+  onOpenChange,
 }: UsersActionDialogProps) {
   const isEdit = !!currentRow
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -100,143 +116,300 @@ export function UsersActionDialog({
       confirmPassword: '',
       isEdit,
     },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: (data) => {
+      console.log(data)
+    },
   })
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data)
-  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {isEdit ? 'Edit User' : 'Add User'}
-          </DialogTitle>
+          <DialogTitle>{isEdit ? 'Edit User' : 'Add User'}</DialogTitle>
           <DialogDescription>
             {isEdit ? 'Update the user here. ' : 'Create new user here. '}
             Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} id="user-form">
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="John" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="User Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter phone number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {roles.map((role) => (
-                        <SelectItem value={role.value} key={role.value}>
-                          {role.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., S3cur3P@ssw0rd" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., S3cur3P@ssw0rd" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="h-105 overflow-y-auto py-1 pe-3">
+          <form
+            id="user-form"
+            onSubmit={(e) => {
+              e.preventDefault()
+              form.handleSubmit()
+            }}
+          >
+            <FieldGroup>
+              <form.Field
+                name="firstName"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        First Name
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="John"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="lastName"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Last Name
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="Doe"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="username"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        User Name
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="User Name"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="email"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Email
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="Email"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="phoneNumber"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Phone Number
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="Enter phone number"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="role"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Role
+                      </FieldLabel>
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                      <Select
+                        name={field.name}
+                        value={field.state.value}
+                        onValueChange={field.handleChange}
+                      >
+                        <SelectTrigger
+                          aria-invalid={isInvalid}
+                          className="col-span-4"
+                        >
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {roles.map((role) => (
+                            <SelectItem key={role.value} value={role.value}>
+                              {role.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="password"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Password
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="e.g., S3cur3P@ssw0rd"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="confirmPassword"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="col-span-2 text-end"
+                      >
+                        Confirm Password
+                      </FieldLabel>
+                      <Input
+                        className="col-span-4"
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="e.g., S3cur3P@ssw0rd"
+                        autoComplete="off"
+                        aria-invalid={isInvalid}
+                      />
+                      <FieldError
+                        className="col-span-4 col-start-3"
+                        errors={field.state.meta.errors}
+                      />
+                    </Field>
+                  )
+                }}
+              />
+            </FieldGroup>
           </form>
-        </Form>
+        </div>
         <DialogFooter>
           <Button type="submit" form="user-form">
             Save changes
