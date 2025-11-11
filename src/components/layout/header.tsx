@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
-import { Separator } from '../base/separator'
+import { Separator } from '../ui/separator'
 import { SidebarTrigger } from '../ui/sidebar'
 
 type HeaderProps = React.HTMLAttributes<HTMLElement> & {

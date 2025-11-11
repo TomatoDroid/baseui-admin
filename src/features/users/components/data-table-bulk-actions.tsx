@@ -1,5 +1,5 @@
-import { Button } from "@/components/base/button"
-import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/base/tooltip"
+import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/ui/tooltip"
 import { BulkActionsToolbar } from "@/components/data-table/bulk-actions"
 import { DataMultiDeleteDialog } from "@/features/tasks/components/data-multi-delete-dialog"
 import { sleep } from "@/lib/utils"

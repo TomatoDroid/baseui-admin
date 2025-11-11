@@ -1,5 +1,5 @@
-import { Button } from "@/components/base/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositioner, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/base/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositioner, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Row } from "@tanstack/react-table"
 import { Trash2, UserPen } from "lucide-react"

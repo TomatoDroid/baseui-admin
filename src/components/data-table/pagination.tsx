@@ -1,8 +1,8 @@
 import { cn, getPageNumbers } from "@/lib/utils"
 import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons"
 import { Table } from "@tanstack/react-table"
-import { Button } from "../base/button"
-import { Select, SelectContent, SelectItem, SelectPositioner, SelectTrigger, SelectValue } from "../base/select"
+import { Button } from "../ui/button"
+import { Select, SelectContent, SelectItem, SelectPositioner, SelectTrigger, SelectValue } from "../ui/select"
 
 type DataTablePagination<TData> = {
   table: Table<TData>

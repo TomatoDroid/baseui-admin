@@ -1,5 +1,5 @@
 import { Settings } from 'lucide-react'
-import { Button } from './base/button'
+import { Button } from './ui/button'
 import {
   Sheet,
   SheetContent,
@@ -8,7 +8,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './base/sheet'
+} from './ui/sheet'
 
 export function ConfigDrawer() {
   return (

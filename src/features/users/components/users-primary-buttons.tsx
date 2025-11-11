@@ -1,4 +1,4 @@
-import { Button } from "@/components/base/button"
+import { Button } from "@/components/ui/button"
 import { MailPlus, UserPlus } from "lucide-react"
 import { useUsers } from "./users-provider"
 

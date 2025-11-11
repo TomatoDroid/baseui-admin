@@ -1,5 +1,5 @@
-import { Input } from "@/components/base/input";
-import { Label } from "@/components/base/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { sleep } from "@/lib/utils";

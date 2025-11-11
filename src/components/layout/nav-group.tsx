@@ -1,12 +1,12 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
 import React from 'react'
-import { Badge } from '../base/badge'
+import { Badge } from '../ui/badge'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../base/collapsible'
+} from '../ui/collapsible'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   DropdownMenuPositioner,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../base/dropdown-menu'
+} from '../ui/dropdown-menu'
 import {
   SidebarGroup,
   SidebarGroupLabel,

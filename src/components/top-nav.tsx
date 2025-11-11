@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import React from "react";
-import { Button } from "./base/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositioner, DropdownMenuTrigger } from "./base/dropdown-menu";
+import { Button } from "./ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPositioner, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 type TopNavProps = React.HTMLAttributes<HTMLElement> & {
   links: {

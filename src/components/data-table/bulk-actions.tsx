@@ -1,5 +1,5 @@
-import { Button } from "@/components/base/button"
-import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/base/tooltip"
+import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipPositioner, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { Table } from "@tanstack/react-table"
 import { X } from "lucide-react"

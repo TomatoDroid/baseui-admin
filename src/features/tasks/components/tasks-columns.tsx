@@ -1,5 +1,5 @@
-import { Badge } from "@/components/base/badge";
-import { Checkbox } from "@/components/base/checkbox";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { labels, priorities, statuses } from "../data/data";
 import { Task } from "../data/schema";

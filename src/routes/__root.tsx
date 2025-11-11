@@ -11,12 +11,15 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import { Toaster } from '@/components/ui/sonner'
+import { AuthProvider, useAuth } from '../auth'
 import { ThemeProvider } from '@/context/theme-provider'
 import { FormDevtoolsPlugin } from "@tanstack/react-form-devtools"
 import type { QueryClient } from '@tanstack/react-query'
+import { Outlet } from '@tanstack/react-router'
 
 interface MyRouterContext {
   queryClient: QueryClient
+  auth: ReturnType<typeof useAuth>
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
@@ -41,10 +44,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
 
-  shellComponent: RootDocument,
+  component: RootComponent,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootComponent() {
   return (
     <html lang="en">
       <head>
@@ -52,7 +55,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ThemeProvider>
-          {children}
+          <AuthProvider>
+            <Outlet />
+          </AuthProvider>
           <Toaster duration={5000} />
         </ThemeProvider>
         <TanStackDevtools

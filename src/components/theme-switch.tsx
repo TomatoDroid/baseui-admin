@@ -1,12 +1,12 @@
 import { CheckIcon, Moon, Sun } from 'lucide-react'
-import { Button } from './base/button'
+import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuPositioner,
   DropdownMenuTrigger,
-} from './base/dropdown-menu'
+} from './ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/context/theme-provider'
 import { useEffect } from 'react'

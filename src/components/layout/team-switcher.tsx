@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from '../base/dropdown-menu'
+} from '../ui/dropdown-menu'
 import {
   SidebarMenu,
   SidebarMenuButton,

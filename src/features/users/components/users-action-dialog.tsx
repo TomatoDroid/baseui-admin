@@ -1,8 +1,10 @@
-import { Button } from "@/components/base/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/base/dialog"
-import { createFormHook } from "@/components/base/form-tanstack"
-import { Input } from "@/components/base/input"
-import { Select, SelectContent, SelectItem, SelectPositioner, SelectTrigger, SelectValue } from "@/components/base/select"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import z from "zod"
 import { roles } from "../data/data"
 import { User } from "../data/schema"
@@ -19,8 +21,8 @@ const formSchema = z
     lastName: z.string().min(1, 'Last Name is required.'),
     username: z.string().min(1, 'Username is required.'),
     phoneNumber: z.string().min(1, 'Phone number is required.'),
-    email: z.email({
-      error: (iss) => (iss.input === '' ? 'Email is required.' : undefined),
+    email: z.string().email({
+      message: "Please enter a valid email.",
     }),
     password: z.string().transform((pwd) => pwd.trim()),
     role: z.string().min(1, 'Role is required.'),
@@ -78,7 +80,6 @@ const formSchema = z
     }
   )
 
-const { useAppForm } = createFormHook()
 export function UsersActionDialog({
   currentRow,
   open,
@@ -86,7 +87,8 @@ export function UsersActionDialog({
 }: UsersActionDialogProps) {
   const isEdit = !!currentRow
 
-  const form = useAppForm({
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -97,14 +99,12 @@ export function UsersActionDialog({
       password: '',
       confirmPassword: '',
       isEdit,
-    } as z.infer<typeof formSchema>,
-    validators: {
-      onChange: formSchema
-    },
-    onSubmit: ({ value }) => {
-      console.log(value)
     },
   })
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log(data)
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -118,168 +118,127 @@ export function UsersActionDialog({
             Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <div>
-          <form.AppForm>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                form.handleSubmit();
-              }}
-              id="user-form"
-            >
-              <form.AppField name="firstName">
-                {
-                  (field) => (
-                    <form.Item>
-                      <field.Label>First Name</field.Label>
-                      <field.Control>
-                        <Input
-                          placeholder="John"
-                          autoComplete="off"
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                        />
-                      </field.Control>
-                      <field.Message />
-                    </form.Item>
-                  )
-                }
-              </form.AppField>
-              <form.AppField name="lastName">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>Last Name</field.Label>
-                    <field.Control>
-                      <Input
-                        placeholder="Doe"
-                        autoComplete="off"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="username">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>User Name</field.Label>
-                    <field.Control>
-                      <Input
-                        type="text"
-                        placeholder="User Name"
-                        autoComplete="off"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="email">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>Email</field.Label>
-                    <field.Control>
-                      <Input
-                        type="email"
-                        placeholder="Email"
-                        autoComplete="off"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="phoneNumber">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>Phone Number</field.Label>
-                    <field.Control>
-                      <Input
-                        type="text"
-                        placeholder="Enter phone number"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="role">
-                {(field) => (
-                  <form.Item>
-                    <field.Label htmlFor="form-tanstack-select-language">Role</field.Label>
-                    <Select
-                      value={field.state.value}
-                      onValueChange={(e) => field.handleChange(e as z.infer<typeof formSchema>["role"])}
-                    >
-                      <field.Control>
-                        <SelectTrigger id="form-tanstack-select-language">
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                      </field.Control>
-                      <SelectPositioner>
-                        <SelectContent>
-                          {
-                            roles.map((role) => (
-                              <SelectItem value={role.value} key={role.value}>
-                                {role.label}
-                              </SelectItem>
-                          ))
-                          }
-                        </SelectContent>
-                      </SelectPositioner>
-                    </Select>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="password">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>Password</field.Label>
-                    <field.Control>
-                      <Input
-                        placeholder='e.g., S3cur3P@ssw0rd'
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-              <form.AppField name="confirmPassword">
-                {(field) => (
-                  <form.Item>
-                    <field.Label>ConfirmPassword</field.Label>
-                    <field.Control>
-                      <Input
-                        placeholder='e.g., S3cur3P@ssw0rd'
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </field.Control>
-                    <field.Message />
-                  </form.Item>
-                )}
-              </form.AppField>
-            </form>
-          </form.AppForm>
-        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} id="user-form">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="User Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter phone number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {roles.map((role) => (
+                        <SelectItem value={role.value} key={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., S3cur3P@ssw0rd" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., S3cur3P@ssw0rd" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
         <DialogFooter>
-          <Button type="submit" form={"user-form"}>
+          <Button type="submit" form="user-form">
             Save changes
           </Button>
         </DialogFooter>

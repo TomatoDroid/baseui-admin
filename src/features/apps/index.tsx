@@ -1,5 +1,5 @@
-import { Button } from '@/components/base/button'
-import { Input } from '@/components/base/input'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -7,8 +7,8 @@ import {
   SelectPositioner,
   SelectTrigger,
   SelectValue,
-} from '@/components/base/select'
-import { Separator } from '@/components/base/separator'
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
 import { ConfigDrawer } from '@/components/config-drawer'
 import Header from '@/components/layout/header'
 import { Main } from '@/components/layout/main'

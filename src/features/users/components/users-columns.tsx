@@ -1,5 +1,5 @@
-import { Badge } from "@/components/base/badge";
-import { Checkbox } from "@/components/base/checkbox";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
 import { LongText } from "@/components/long-text";
 import { DataTableRowActions } from "@/features/users/components/data-table-row-actions";
