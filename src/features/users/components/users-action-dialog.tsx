@@ -1,3 +1,4 @@
+import { PasswordInput } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -7,6 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -15,16 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useForm } from '@tanstack/react-form'
+import { useForm, useStore } from '@tanstack/react-form'
 import z from 'zod'
 import { roles } from '../data/data'
 import { User } from '../data/schema'
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '@/components/ui/field'
 
 type UsersActionDialogProps = {
   currentRow?: User
@@ -121,11 +122,17 @@ export function UsersActionDialog({
     },
     onSubmit: (data) => {
       console.log(data)
+      form.reset()
     },
   })
 
+  const isPasswordTouched  =useStore(form.store, (state) => state.values.password === '')
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={(state) => {
+      form.reset()
+      onOpenChange(state)
+    }}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Edit User' : 'Add User'}</DialogTitle>
@@ -134,7 +141,7 @@ export function UsersActionDialog({
             Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <div className="h-105 overflow-y-auto py-1 pe-3">
+        <div className="h-130 overflow-y-auto py-1 pe-3">
           <form
             id="user-form"
             onSubmit={(e) => {
@@ -356,7 +363,7 @@ export function UsersActionDialog({
                       >
                         Password
                       </FieldLabel>
-                      <Input
+                      <PasswordInput
                         className="col-span-4"
                         id={field.name}
                         name={field.name}
@@ -388,7 +395,7 @@ export function UsersActionDialog({
                       >
                         Confirm Password
                       </FieldLabel>
-                      <Input
+                      <PasswordInput
                         className="col-span-4"
                         id={field.name}
                         name={field.name}
@@ -398,6 +405,7 @@ export function UsersActionDialog({
                         placeholder="e.g., S3cur3P@ssw0rd"
                         autoComplete="off"
                         aria-invalid={isInvalid}
+                        disabled={isPasswordTouched}
                       />
                       <FieldError
                         className="col-span-4 col-start-3"
