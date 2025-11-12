@@ -1,11 +1,10 @@
+import { BulkActionsToolbar } from '@/components/data-table/bulk-actions'
 import { Button } from '@/components/ui/button'
-// imports
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { BulkActionsToolbar } from '@/components/data-table/bulk-actions'
 import { DataMultiDeleteDialog } from '@/features/tasks/components/data-multi-delete-dialog'
 import { sleep } from '@/lib/utils'
 import { Table } from '@tanstack/react-table'
@@ -54,85 +53,76 @@ export function DataTableBulkActions<TData>({
     <>
       <BulkActionsToolbar table={table} entityName="user">
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant={'outline'}
-                size={'icon'}
-                className="size-8"
-                aria-label="Invite selected users"
-                title="Invite selected users"
-                onClick={handleBulkInvite}
-              >
-                <Mail />
-                <span className="sr-only">Invite selected users</span>
-              </Button>
-            }
-          />
-          // 移除 TooltipPositioner 包裹
+          <TooltipTrigger asChild>
+            <Button
+              variant={'outline'}
+              size={'icon'}
+              className="size-8"
+              aria-label="Invite selected users"
+              title="Invite selected users"
+              onClick={handleBulkInvite}
+            >
+              <Mail />
+              <span className="sr-only">Invite selected users</span>
+            </Button>
+          </TooltipTrigger>
           <TooltipContent>
             <p>Invite selected users</p>
           </TooltipContent>
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => handleBulkStatusChange('active')}
-                className="size-8"
-                aria-label="Activate selected users"
-                title="Activate selected users"
-              >
-                <UserCheck />
-                <span className="sr-only">Activate selected users</span>
-              </Button>
-            }
-          />
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleBulkStatusChange('active')}
+              className="size-8"
+              aria-label="Activate selected users"
+              title="Activate selected users"
+            >
+              <UserCheck />
+              <span className="sr-only">Activate selected users</span>
+            </Button>
+          </TooltipTrigger>
           <TooltipContent>
             <p>Activate selected users</p>
           </TooltipContent>
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => handleBulkStatusChange('inactive')}
-                className="size-8"
-                aria-label="Deactivate selected users"
-                title="Deactivate selected users"
-              >
-                <UserX />
-                <span className="sr-only">Deactivate selected users</span>
-              </Button>
-            }
-          />
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleBulkStatusChange('inactive')}
+              className="size-8"
+              aria-label="Deactivate selected users"
+              title="Deactivate selected users"
+            >
+              <UserX />
+              <span className="sr-only">Deactivate selected users</span>
+            </Button>
+          </TooltipTrigger>
           <TooltipContent>
             <p>Deactivate selected users</p>
           </TooltipContent>
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant="destructive"
-                size="icon"
-                onClick={() => setShowDeleteConfirm(true)}
-                className="size-8"
-                aria-label="Delete selected users"
-                title="Delete selected users"
-              >
-                <Trash2 />
-                <span className="sr-only">Delete selected users</span>
-              </Button>
-            }
-          />
+          <TooltipTrigger asChild>
+            <Button
+              variant="destructive"
+              size="icon"
+              onClick={() => setShowDeleteConfirm(true)}
+              className="size-8"
+              aria-label="Delete selected users"
+              title="Delete selected users"
+            >
+              <Trash2 />
+              <span className="sr-only">Delete selected users</span>
+            </Button>
+          </TooltipTrigger>
           <TooltipContent>
             <p>Delete selected users</p>
           </TooltipContent>
