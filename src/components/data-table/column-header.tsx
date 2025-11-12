@@ -23,6 +23,10 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   column,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  if (!column.getCanSort()) {
+    return <div className={className}>{title}</div>
+  }
+
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <DropdownMenu>
