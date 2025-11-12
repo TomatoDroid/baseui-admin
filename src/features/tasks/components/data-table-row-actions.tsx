@@ -40,9 +40,11 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem
           onClick={() => {
             setCurrentRow(task)
-            setOpen("update")
+            setOpen('update')
           }}
-        >Edit</DropdownMenuItem>
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem disabled>Make a Copy</DropdownMenuItem>
         <DropdownMenuItem disabled>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -59,7 +61,12 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            setCurrentRow(task)
+            setOpen('delete')
+          }}
+        >
           Delete
           <DropdownMenuShortcut>
             <Trash2 size={16} />
