@@ -10,6 +10,24 @@ export function UsersDialogs() {
         open={open === "add"}
         onOpenChange={() => setOpen("add")}
       />
+
+      {
+        currentRow && (
+          <>
+            <UsersActionDialog
+              key={"user-edit"}
+              open={open === "edit"}
+              onOpenChange={() => {
+                setOpen("edit")
+                setTimeout(() => {
+                  setCurrentRow(null)
+                }, 500);
+              }}
+              currentRow={currentRow}
+            />
+          </>
+        )
+      }
     </>
   )
 }

@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { showSubmittedData } from '@/lib/show-submitted-data'
 import { useForm, useStore } from '@tanstack/react-form'
 import z from 'zod'
 import { roles } from '../data/data'
@@ -106,27 +107,33 @@ export function UsersActionDialog({
   const isEdit = !!currentRow
 
   const form = useForm({
-    defaultValues: {
+    defaultValues: isEdit ? {
+      ...currentRow,
+      password: '',
+      confirmPassword: '',
+      isEdit: true,
+    } : {
       firstName: '',
       lastName: '',
       username: '',
       email: '',
-      role: 'superadmin',
+      role: '',
       phoneNumber: '',
       password: '',
       confirmPassword: '',
-      isEdit,
+      isEdit: false,
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: (data) => {
-      console.log(data)
+      showSubmittedData(data.value)
       form.reset()
+      onOpenChange(false)
     },
   })
 
-  const isPasswordTouched  =useStore(form.store, (state) => state.values.password === '')
+  const isPasswordTouched = useStore(form.store, (state) => state.values.password === '')
 
   return (
     <Dialog open={open} onOpenChange={(state) => {
