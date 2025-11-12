@@ -1,32 +1,38 @@
-import { TasksMultiDrawer } from "./tasks-multi-drawer"
-import { useTasks } from "./tasks-provider"
+import { TasksImportDialog } from './tasks-import-dialog'
+import { TasksMultiDrawer } from './tasks-multi-drawer'
+import { useTasks } from './tasks-provider'
 
 export function TasksDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useTasks()
   return (
     <>
       <TasksMultiDrawer
-        key={"task-create"}
-        open={open === "create"}
+        key={'task-create'}
+        open={open === 'create'}
         onOpenChange={() => {
-          setOpen("create")
+          setOpen('create')
         }}
       />
-      {
-        currentRow && (
-          <TasksMultiDrawer
-            key={"task-edit"}
-            open={open === "update"}
-            currentRow={currentRow}
-            onOpenChange={() => {
-              setOpen("update")
-              setTimeout(() => {
-                setCurrentRow(null)
-              }, 500);
-            }}
-          />
-        )
-      }
+      <TasksImportDialog
+        key={'task-import'}
+        open={open === 'import'}
+        onOpenChange={() => {
+          setOpen('import')
+        }}
+      />
+      {currentRow && (
+        <TasksMultiDrawer
+          key={'task-edit'}
+          open={open === 'update'}
+          currentRow={currentRow}
+          onOpenChange={() => {
+            setOpen('update')
+            setTimeout(() => {
+              setCurrentRow(null)
+            }, 500)
+          }}
+        />
+      )}
     </>
   )
 }
