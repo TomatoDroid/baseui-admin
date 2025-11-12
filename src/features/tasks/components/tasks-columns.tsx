@@ -1,3 +1,4 @@
+import { DataTableColumnHeader } from '@/components/data-table/column-header'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
@@ -34,7 +35,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'id',
-    header: 'ID',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='Task' />,
     cell: ({ row }) => <div className="w-20">{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
@@ -57,7 +58,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'status',
-    header: 'Status',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='Status' />,
     meta: {
       className: '',
       tdClassName: '',
@@ -84,7 +85,7 @@ export const tasksColumns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'priority',
-    header: 'Priority',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='Priority' />,
     meta: { className: '', tdClassName: '' },
     cell: ({ row }) => {
       const priority = priorities.find(

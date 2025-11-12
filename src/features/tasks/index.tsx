@@ -4,6 +4,7 @@ import { Main } from "@/components/layout/main";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { TasksDialogs } from "./components/tasks-dialogs";
 import TasksPrimaryButtons from "./components/tasks-primary-buttons";
 import { TasksProvider } from "./components/tasks-provider";
 import { TasksTable } from "./components/tasks-table";
@@ -31,6 +32,7 @@ export function Tasks() {
         </div>
         <TasksTable data={tasks} />
       </Main>
+      <TasksDialogs />
     </TasksProvider>
   )
 }

@@ -37,7 +37,12 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="left" align="start" className={'w-40'}>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            setCurrentRow(task)
+            setOpen("update")
+          }}
+        >Edit</DropdownMenuItem>
         <DropdownMenuItem disabled>Make a Copy</DropdownMenuItem>
         <DropdownMenuItem disabled>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
