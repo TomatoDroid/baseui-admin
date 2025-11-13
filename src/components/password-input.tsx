@@ -31,7 +31,7 @@ export function PasswordInput({
         variant={"ghost"}
         size={"icon"}
         disabled={disabled}
-        className="absolute right-0 top-0 h-full"
+        className="absolute right-1 top-1/2 size-6 -translate-y-1/2"
         onClick={() => setShowPassword((prev) => !prev)}
       >
         {showPassword ? <Eye /> : <EyeOff />}
