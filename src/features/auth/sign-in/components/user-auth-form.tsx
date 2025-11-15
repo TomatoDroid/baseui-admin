@@ -1,16 +1,9 @@
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
-import { PasswordInput } from '@/components/password-input'
+import { useAppForm } from '@/components/form'
 import { Button } from '@/components/ui/button'
-import {
-  FieldError,
-  FieldLabel,
-  Field,
-  FieldGroup,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
+import { FieldGroup } from '@/components/ui/field'
 import { sleep } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
-import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Loader2, LogIn } from 'lucide-react'
 import React, { useState } from 'react'
@@ -41,7 +34,7 @@ export function UserAuthForm({
   const navigate = useNavigate()
   const { auth } = useAuthStore()
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       email: '',
       password: '',
@@ -80,61 +73,26 @@ export function UserAuthForm({
       {...props}
     >
       <FieldGroup>
-        <form.Field
+        <form.AppField
           name="email"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="off"
-                  aria-invalid={isInvalid}
-                  placeholder="name@example.com"
-                />
-                <FieldError errors={field.state.meta.errors} />
-              </Field>
-            )
-          }}
+          children={(field) => (
+            <field.Input label="Email" placeholder="name@example.com" />
+          )}
         />
 
-        <form.Field
+        <form.AppField
           name="password"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid
-            return (
-              <Field data-invalid={isInvalid}>
-                <div className="flex items-center justify-between">
-                  <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                  <Link
-                    to="/forgot-password"
-                    className="text-sm font-medium hover:opacity-75 text-muted-foreground"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-                <PasswordInput
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="off"
-                  aria-invalid={isInvalid}
-                  placeholder="********"
-                />
-
-                <FieldError errors={field.state.meta.errors} />
-              </Field>
-            )
-          }}
+          children={(field) => (
+            <div className="relative">
+              <field.Password label="Password" placeholder="********" />
+              <Link
+                to="/forgot-password"
+                className="text-muted-foreground absolute end-0 -top-0.5 text-sm font-medium hover:opacity-75"
+              >
+                Forgot password?
+              </Link>
+            </div>
+          )}
         />
         <Button type="submit" disabled={isLoading}>
           {isLoading ? <Loader2 className="animate-spin" /> : <LogIn />}
