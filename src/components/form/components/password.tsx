@@ -1,14 +1,16 @@
-import { useStore } from '@tanstack/react-form'
-import { Field, FieldError, FieldLabel } from '../ui/field'
-import { Input as InputComponent } from '../ui/input'
-import { useFieldContext } from './form-context'
+import { Field, FieldError } from "../../ui/field"
+import { FieldLabel } from "../../ui/field"
+import { PasswordInput } from "../../password-input"
+import { useFieldContext } from "../form-context"
+import { useStore } from "@tanstack/react-form"
 
-type InputProps = {
+type PasswordProps = {
   label: string
   placeholder?: string
+  disabled?: boolean
 }
 
-export default function Input({ label, placeholder }: InputProps) {
+export default function Password({ label, placeholder, disabled }: PasswordProps) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -16,7 +18,7 @@ export default function Input({ label, placeholder }: InputProps) {
   return (
     <Field data-invalid={isInvalid}>
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <InputComponent
+      <PasswordInput
         autoComplete="off"
         aria-invalid={isInvalid}
         placeholder={placeholder}
@@ -25,6 +27,7 @@ export default function Input({ label, placeholder }: InputProps) {
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        disabled={disabled}
       />
       <FieldError errors={errors} />
     </Field>

@@ -2,29 +2,18 @@ import { Button } from '@/components/ui/button'
 import {
   Field,
   FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from '@/components/ui/input-group'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { showSubmittedData } from '@/lib/show-submitted-data'
-import { useForm } from '@tanstack/react-form'
+import { useAppForm } from '@/components/form'
 import { XIcon } from 'lucide-react'
 import z from 'zod'
+import {
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupButton,
+} from '@/components/ui/input-group'
 
 const formSchema = z.object({
   username: z
@@ -44,11 +33,11 @@ const formSchema = z.object({
         value: z.url('Please enter a valid URL.'),
       }),
     )
-    .optional(),
+    .default([]),
 })
 
 export function ProfileForm() {
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       username: '',
       email: '',
@@ -59,7 +48,7 @@ export function ProfileForm() {
       ],
     },
     validators: {
-      onSubmit: formSchema,
+      onSubmit: formSchema as any,
     },
     onSubmit: (data) => {
       showSubmittedData(data)
@@ -75,155 +64,82 @@ export function ProfileForm() {
         }}
       >
         <FieldGroup>
-          <form.Field
+          <form.AppField
             name="username"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid
-              return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Username</FieldLabel>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    autoComplete="off"
-                    placeholder="shadcn"
-                    aria-invalid={isInvalid}
-                  />
-                  <FieldDescription>
-                    This is your public display name. It can be your real name
-                    or a pseudonym. You can only change this once every 30 days.
-                  </FieldDescription>
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
-              )
-            }}
+            children={(field) => (
+              <field.Input label="Username" placeholder="shadcn" />
+            )}
           />
 
-          <form.Field
+          <form.AppField
             name="email"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid
-              return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                  <Select
-                    value={field.state.value}
-                    onValueChange={field.handleChange}
-                  >
-                    <SelectTrigger aria-invalid={isInvalid}>
-                      <SelectValue placeholder="Select a verified email to display" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="m@example.com">
-                        m@example.com
-                      </SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">
-                        m@support.com
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FieldDescription>
-                    You can manage verified email addresses in your email
-                    settings
-                  </FieldDescription>
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
-              )
-            }}
+            children={(field) => (
+              <field.Select
+                label="Email"
+                placeholder="Select a verified email to display"
+                options={[
+                  { label: 'm@example.com', value: 'm@example.com' },
+                  { label: 'm@google.com', value: 'm@google.com' },
+                  { label: 'm@support.com', value: 'm@support.com' },
+                ]}
+              />
+            )}
           />
 
-          <form.Field
+          <form.AppField
             name="bio"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid
-              return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Bio</FieldLabel>
-                  <Textarea
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                    placeholder="Tell us a little bit about yourself"
-                    className="resize-none"
-                  />
-                  <FieldDescription>
-                    You can <span>@mention</span> other users and organizations
-                    to link to them.
-                  </FieldDescription>
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
-              )
-            }}
+            children={(field) => (
+              <field.Textarea
+                label="Bio"
+                placeholder="Tell us a little bit about yourself"
+              />
+            )}
           />
 
-          <form.Field
+          <form.AppField
             mode="array"
             name="urls"
             children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid
               return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>URLs</FieldLabel>
+                <Field>
+                  <FieldLabel>URLs</FieldLabel>
                   <FieldDescription>
                     Add links to your website, blog, or social media profiles.
                   </FieldDescription>
                   <FieldGroup>
                     {field.state.value.map((_, index) => (
-                      <form.Field
+                      <form.AppField
                         key={index}
                         name={`urls[${index}].value`}
-                        children={(subField) => {
-                          const isSubFieldInvalid =
-                            subField.state.meta.isTouched &&
-                            !subField.state.meta.isValid
-                          return (
-                            <Field data-invalid={isSubFieldInvalid}>
-                              <InputGroup>
-                                <InputGroupInput
-                                  name={subField.name}
-                                  value={subField.state.value}
-                                  onBlur={subField.handleBlur}
-                                  onChange={(e) =>
-                                    subField.handleChange(e.target.value)
-                                  }
-                                  autoComplete="off"
-                                  aria-invalid={isSubFieldInvalid}
-                                />
-                                {field.state.value.length > 1 && (
-                                  <InputGroupAddon align={'inline-end'}>
+                        children={(subField) => (
+                          <subField.InputGroup
+                            label=""
+                            children={
+                              <>
+                                <InputGroupInput placeholder="https://example.com" />
+                                {subField.state.value.length > 1 && (
+                                  <InputGroupAddon align="inline-end">
                                     <InputGroupButton
                                       type="button"
-                                      variant={'ghost'}
-                                      size={'icon-xs'}
+                                      variant="ghost"
+                                      size="icon-sm"
                                       onClick={() => field.removeValue(index)}
-                                      aria-label={`Remove email ${index + 1}`}
+                                      aria-label="Remove URL"
                                     >
-                                      <XIcon />
+                                      <XIcon className="h-4 w-4" />
                                     </InputGroupButton>
                                   </InputGroupAddon>
                                 )}
-                              </InputGroup>
-                              <FieldError errors={subField.state.meta.errors} />
-                            </Field>
-                          )
-                        }}
+                              </>
+                            }
+                          />
+                        )}
                       />
                     ))}
                     <Button
                       type="button"
                       variant="outline"
-                      size={'sm'}
+                      size="sm"
                       onClick={() => field.pushValue({ value: '' })}
                       aria-label="Add URL"
                     >
@@ -234,7 +150,6 @@ export function ProfileForm() {
               )
             }}
           />
-
           <Button type="submit">Update profile</Button>
         </FieldGroup>
       </form>

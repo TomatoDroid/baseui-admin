@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { FieldGroup } from "@/components/ui/field"
 import { showSubmittedData } from "@/lib/show-submitted-data"
-import { useForm } from "@tanstack/react-form"
+import { useAppForm } from "@/components/form"
 import { MailPlus, Send } from "lucide-react"
 import z from "zod"
 import { roles } from "../data/data"
@@ -27,7 +24,7 @@ export function UsersInviteDialog({
   open,
   onOpenChange
 }: UsersInviteDialogProps) {
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       email: '',
       role: '',
@@ -37,9 +34,7 @@ export function UsersInviteDialog({
       onSubmit: formSchema,
     },
     onSubmit: (data) => {
-      // onOpenChange(false)
       showSubmittedData(data.value)
-      // form.reset()
     },
   })
 
@@ -66,75 +61,36 @@ export function UsersInviteDialog({
           }}
         >
           <FieldGroup>
-            <form.Field
+            <form.AppField
               name="email"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="email"
-                      placeholder='eg: john.doe@gmail.com'
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      autoComplete="off"
-                      aria-invalid={isInvalid}
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.Input
+                  label="Email"
+                  placeholder="eg: john.doe@gmail.com"
+                />
+              )}
             />
-            <form.Field
+            <form.AppField
               name="role"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Role</FieldLabel>
-                    <Select
-                      name={field.name}
-                      value={field.state.value}
-                      onValueChange={(v) => field.handleChange(v)}
-                    >
-                      <SelectTrigger id={field.name} aria-invalid={isInvalid}>
-                        <SelectValue placeholder='Select a role'></SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem key={role.value} value={role.value}>
-                            {role.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.Select
+                  label="Role"
+                  placeholder="Select a role"
+                  options={roles.map((role) => ({
+                    label: role.label,
+                    value: role.value,
+                  }))}
+                />
+              )}
             />
-            <form.Field
+            <form.AppField
               name="desc"
-              children={(field) => {
-                return (
-                  <Field >
-                    <FieldLabel>Description (optional)</FieldLabel>
-                    <Textarea
-                      placeholder='Add a personal note to your invitation (optional)'
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.Textarea
+                  label="Description (optional)"
+                  placeholder="Add a personal note to your invitation (optional)"
+                />
+              )}
             />
           </FieldGroup>
         </form>

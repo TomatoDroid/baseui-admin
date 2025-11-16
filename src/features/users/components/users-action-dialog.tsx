@@ -1,4 +1,3 @@
-import { PasswordInput } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,22 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { FieldGroup } from '@/components/ui/field'
 import { showSubmittedData } from '@/lib/show-submitted-data'
-import { useForm, useStore } from '@tanstack/react-form'
+import { useAppForm } from '@/components/form'
+import { useStore } from '@tanstack/react-form'
 import z from 'zod'
 import { roles } from '../data/data'
 import { User } from '../data/schema'
@@ -106,23 +93,25 @@ export function UsersActionDialog({
 }: UsersActionDialogProps) {
   const isEdit = !!currentRow
 
-  const form = useForm({
-    defaultValues: isEdit ? {
-      ...currentRow,
-      password: '',
-      confirmPassword: '',
-      isEdit: true,
-    } : {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      role: '',
-      phoneNumber: '',
-      password: '',
-      confirmPassword: '',
-      isEdit: false,
-    },
+  const form = useAppForm({
+    defaultValues: isEdit
+      ? {
+          ...currentRow,
+          password: '',
+          confirmPassword: '',
+          isEdit: true,
+        }
+      : {
+          firstName: '',
+          lastName: '',
+          username: '',
+          email: '',
+          role: '',
+          phoneNumber: '',
+          password: '',
+          confirmPassword: '',
+          isEdit: false,
+        },
     validators: {
       onSubmit: formSchema,
     },
@@ -133,13 +122,19 @@ export function UsersActionDialog({
     },
   })
 
-  const isPasswordTouched = useStore(form.store, (state) => state.values.password === '')
+  const isPasswordTouched = useStore(
+    form.store,
+    (state) => state.values.password === '',
+  )
 
   return (
-    <Dialog open={open} onOpenChange={(state) => {
-      form.reset()
-      onOpenChange(state)
-    }}>
+    <Dialog
+      open={open}
+      onOpenChange={(state) => {
+        form.reset()
+        onOpenChange(state)
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Edit User' : 'Add User'}</DialogTitle>
@@ -157,270 +152,70 @@ export function UsersActionDialog({
             }}
           >
             <FieldGroup>
-              <form.Field
+              <form.AppField
                 name="firstName"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        First Name
-                      </FieldLabel>
-                      <Input
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="John"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Input label="First Name" placeholder="John" />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="lastName"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Last Name
-                      </FieldLabel>
-                      <Input
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="Doe"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Input label="Last Name" placeholder="Doe" />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="username"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        User Name
-                      </FieldLabel>
-                      <Input
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="User Name"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Input label="User Name" placeholder="User Name" />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="email"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Email
-                      </FieldLabel>
-                      <Input
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="Email"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Input label="Email" placeholder="Email" />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="phoneNumber"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Phone Number
-                      </FieldLabel>
-                      <Input
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="Enter phone number"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Input
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                  />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="role"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Role
-                      </FieldLabel>
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                      <Select
-                        name={field.name}
-                        value={field.state.value}
-                        onValueChange={field.handleChange}
-                      >
-                        <SelectTrigger
-                          aria-invalid={isInvalid}
-                          className="col-span-4"
-                        >
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {roles.map((role) => (
-                            <SelectItem key={role.value} value={role.value}>
-                              {role.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Select
+                    label="Role"
+                    placeholder="Select a role"
+                    options={roles.map((role) => ({
+                      label: role.label,
+                      value: role.value,
+                    }))}
+                  />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="password"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Password
-                      </FieldLabel>
-                      <PasswordInput
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g., S3cur3P@ssw0rd"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Password
+                    label="Password"
+                    placeholder="e.g., S3cur3P@ssw0rd"
+                  />
+                )}
               />
-              <form.Field
+              <form.AppField
                 name="confirmPassword"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field className="grid grid-cols-6 gap-x-4 gap-y-1" data-invalid={isInvalid}>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="col-span-2 text-end"
-                      >
-                        Confirm Password
-                      </FieldLabel>
-                      <PasswordInput
-                        className="col-span-4"
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g., S3cur3P@ssw0rd"
-                        autoComplete="off"
-                        aria-invalid={isInvalid}
-                        disabled={isPasswordTouched}
-                      />
-                      <FieldError
-                        className="col-span-4 col-start-3"
-                        errors={field.state.meta.errors}
-                      />
-                    </Field>
-                  )
-                }}
+                children={(field) => (
+                  <field.Password
+                    label="Confirm Password"
+                    placeholder="e.g., S3cur3P@ssw0rd"
+                    disabled={isPasswordTouched}
+                  />
+                )}
               />
             </FieldGroup>
           </form>

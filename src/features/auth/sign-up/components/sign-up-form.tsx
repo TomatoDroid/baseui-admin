@@ -8,7 +8,7 @@ import {
   FieldGroup,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { useForm } from '@tanstack/react-form'
+import { useAppForm } from '@/components/form'
 import React, { useState } from 'react'
 import z from 'zod'
 
@@ -33,13 +33,10 @@ const formSchema = z
     path: ['confirmPassword'],
   })
 
-export function SignUpForm({
-  className,
-  ...props
-}: SignUpFormProps) {
+export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       email: '',
       password: '',
@@ -65,77 +62,24 @@ export function SignUpForm({
       {...props}
     >
       <FieldGroup>
-        <form.Field
+        <form.AppField
           name="email"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="off"
-                  aria-invalid={isInvalid}
-                  placeholder="name@example.com"
-                />
-                <FieldError errors={field.state.meta.errors} />
-              </Field>
-            )
-          }}
+          children={(field) => (
+            <field.Input label="Email" placeholder="name@example.com" />
+          )}
         />
 
-        <form.Field
+        <form.AppField
           name="password"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                <PasswordInput
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="off"
-                  aria-invalid={isInvalid}
-                  placeholder="********"
-                />
-
-                <FieldError errors={field.state.meta.errors} />
-              </Field>
-            )
-          }}
+          children={(field) => (
+            <field.Password label="Password" placeholder="********" />
+          )}
         />
-        <form.Field
+        <form.AppField
           name="confirmPassword"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
-                <PasswordInput
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="off"
-                  aria-invalid={isInvalid}
-                  placeholder="********"
-                />
-
-                <FieldError errors={field.state.meta.errors} />
-              </Field>
-            )
-          }}
+          children={(field) => (
+            <field.Password label="Confirm Password" placeholder="********" />
+          )}
         />
         <Button type="submit" disabled={isLoading}>
           Create Account

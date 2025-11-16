@@ -1,13 +1,18 @@
-import { Button } from "@/components/ui/button"
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { showSubmittedData } from "@/lib/show-submitted-data"
-import { useForm } from "@tanstack/react-form"
-import z from "zod"
-import { Task } from "../data/schema"
+import { Button } from '@/components/ui/button'
+import { FieldGroup } from '@/components/ui/field'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
+import { showSubmittedData } from '@/lib/show-submitted-data'
+import z from 'zod'
+import { Task } from '../data/schema'
+import { useAppForm } from '@/components/form'
 
 type TasksMultiDrawerProps = {
   open: boolean
@@ -24,11 +29,11 @@ const taskSchema = z.object({
 export function TasksMultiDrawer({
   open,
   onOpenChange,
-  currentRow
+  currentRow,
 }: TasksMultiDrawerProps) {
   const isUpdate = !!currentRow
 
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: currentRow ?? {
       title: '',
       status: '',
@@ -36,7 +41,7 @@ export function TasksMultiDrawer({
       priority: '',
     },
     validators: {
-      onSubmit: taskSchema
+      onSubmit: taskSchema,
     },
     onSubmit: (data) => {
       onOpenChange(false)
@@ -46,15 +51,16 @@ export function TasksMultiDrawer({
   })
 
   return (
-    <Sheet open={open} onOpenChange={(state) => {
-      form.reset()
-      onOpenChange(state)
-    }}>
+    <Sheet
+      open={open}
+      onOpenChange={(state) => {
+        form.reset()
+        onOpenChange(state)
+      }}
+    >
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>
-            {isUpdate ? 'Update' : 'Create'} Task
-          </SheetTitle>
+          <SheetTitle>{isUpdate ? 'Update' : 'Create'} Task</SheetTitle>
           <SheetDescription>
             {isUpdate
               ? 'Update the task by providing necessary info.'
@@ -71,153 +77,67 @@ export function TasksMultiDrawer({
           className="flex-1 space-y-6 px-4 overflow-y-auto"
         >
           <FieldGroup>
-            <form.Field
+            <form.AppField
               name="title"
               children={(field) => {
-                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Title</FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder='Enter a title'
-                      autoComplete="off"
-                      aria-invalid={isInvalid}
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )
+                return <field.Input label="Title" placeholder="Enter a title" />
               }}
             />
-            <form.Field
+            <form.AppField
               name="status"
-              children={(field) => {
-                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Status</FieldLabel>
-                    <Select
-                      name={field.name}
-                      value={field.state.value}
-                      onValueChange={(v) => field.handleChange(v)}
-                    >
-                      <SelectTrigger id={field.name} aria-invalid={isInvalid}>
-                        <SelectValue placeholder='Select dropdown'></SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        {[
-                          { label: 'In Progress', value: 'in progress' },
-                          { label: 'Backlog', value: 'backlog' },
-                          { label: 'Todo', value: 'todo' },
-                          { label: 'Canceled', value: 'canceled' },
-                          { label: 'Done', value: 'done' },
-                        ].map((role) => (
-                          <SelectItem key={role.value} value={role.value}>
-                            {role.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.Select
+                  label="Status"
+                  placeholder="Select a status"
+                  options={[
+                    { label: 'In Progress', value: 'in progress' },
+                    { label: 'Backlog', value: 'backlog' },
+                    { label: 'Todo', value: 'todo' },
+                    { label: 'Canceled', value: 'canceled' },
+                    { label: 'Done', value: 'done' },
+                  ]}
+                />
+              )}
             />
 
-            <form.Field
+            <form.AppField
               name="label"
-              children={(field) => {
-                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Label</FieldLabel>
-                    <RadioGroup
-                      name={field.name}
-                      value={field.state.value}
-                      onValueChange={field.handleChange}
-                      data-invalid={isInvalid}
-                    >
-                      {
-                        [
-                          { label: 'Documentation', value: 'documentation' },
-                          { label: 'Feature', value: 'feature' },
-                          { label: 'Bug', value: 'bug' }
-                        ].map(item => (
-                          <Field
-                            className="flex items-center"
-                            orientation={"horizontal"}
-                            data-invalid={isInvalid}
-                          >
-                            <RadioGroupItem
-                              id={item.value}
-                              key={item.value}
-                              value={item.value}
-                              aria-invalid={isInvalid}
-                            />
-                            <FieldLabel htmlFor={item.value}>{item.label}</FieldLabel>
-                          </Field>
-                        ))
-                      }
-                      <FieldError errors={field.state.meta.errors} />
-                    </RadioGroup>
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.RadioGroup
+                  label="Label"
+                  options={[
+                    { label: 'Documentation', value: 'documentation' },
+                    { label: 'Feature', value: 'feature' },
+                    { label: 'Bug', value: 'bug' },
+                  ]}
+                />
+              )}
             />
 
-            <form.Field
+            <form.AppField
               name="priority"
-              children={(field) => {
-                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Label</FieldLabel>
-                    <RadioGroup
-                      name={field.name}
-                      value={field.state.value}
-                      onValueChange={field.handleChange}
-                      data-invalid={isInvalid}
-                    >
-                      {
-                        [
-                          { label: 'High', value: 'high' },
-                          { label: 'Medium', value: 'medium' },
-                          { label: 'Low', value: 'low' }
-                        ].map(item => (
-                          <Field
-                            className="flex items-center"
-                            orientation={"horizontal"}
-                            data-invalid={isInvalid}
-                          >
-                            <RadioGroupItem
-                              id={item.value}
-                              key={item.value}
-                              value={item.value}
-                              aria-invalid={isInvalid}
-                            />
-                            <FieldLabel htmlFor={item.value}>{item.label}</FieldLabel>
-                          </Field>
-                        ))
-                      }
-                      <FieldError errors={field.state.meta.errors} />
-                    </RadioGroup>
-                  </Field>
-                )
-              }}
+              children={(field) => (
+                <field.RadioGroup
+                  label="Priority"
+                  options={[
+                    { label: 'High', value: 'high' },
+                    { label: 'Medium', value: 'medium' },
+                    { label: 'Low', value: 'low' },
+                  ]}
+                />
+              )}
             />
           </FieldGroup>
         </form>
         <SheetFooter>
           <SheetClose asChild>
-            <Button variant={"outline"}>Close</Button>
+            <Button variant={'outline'}>Close</Button>
           </SheetClose>
-          <Button type="submit" form="task-form">Save changes</Button>
+          <Button type="submit" form="task-form">
+            Save changes
+          </Button>
         </SheetFooter>
       </SheetContent>
-    </Sheet >
+    </Sheet>
   )
 }

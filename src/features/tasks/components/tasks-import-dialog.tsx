@@ -9,10 +9,8 @@ import {
 } from '@/components/ui/dialog'
 import { Task } from '../data/schema'
 import z from 'zod'
-import { useForm } from '@tanstack/react-form'
+import { useAppForm } from '@/components/form'
 import { showSubmittedData } from '@/lib/show-submitted-data'
-import { Input } from '@/components/ui/input'
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Button } from '@/components/ui/button'
 
 type TasksImportDialogProps = {
@@ -40,7 +38,7 @@ export function TasksImportDialog({
   open,
   onOpenChange,
 }: TasksImportDialogProps) {
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: {
       file: null as FileList | null,
     },
@@ -84,23 +82,15 @@ export function TasksImportDialog({
             form.handleSubmit()
           }}
         >
-          <form.Field
-            name={'file'}
+          <form.AppField
+            name="file"
             children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid
               return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>File</FieldLabel>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="file"
-                    onChange={(e) => field.handleChange(e.target.files)}
-                    aria-invalid={isInvalid}
-                  />
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
+                <field.Input
+                  label="File"
+                  placeholder="Select a file"
+                  type="file"
+                />
               )
             }}
           />
