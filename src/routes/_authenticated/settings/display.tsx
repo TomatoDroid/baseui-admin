@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SettingsDisplay } from '@/features/settings/display'
 
 export const Route = createFileRoute('/_authenticated/settings/display')({
-  component: RouteComponent,
+  component: SettingsDisplay,
 })
-
-function RouteComponent() {
-  return <div>Hello "/_authenticated/settings/display"!</div>
-}

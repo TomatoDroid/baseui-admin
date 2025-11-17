@@ -11,6 +11,7 @@ const RadioGroup = lazy(() => import('./components/radio-group.tsx'))
 const Combobox = lazy(() => import('./components/combobox.tsx'))
 const DataPicker = lazy(() => import('./components/data-picker.tsx'))
 const Checkbox = lazy(() => import('./components/checkbox.tsx'))
+const Switch = lazy(() => import('./components/switch.tsx'))
 const InputGroup = lazy(() => import('./components/input-group-input.tsx'))
 
 export const { useAppForm } = createFormHook({
@@ -24,6 +25,7 @@ export const { useAppForm } = createFormHook({
     Combobox,
     DataPicker,
     Checkbox,
+    Switch,
     InputGroup,
   },
   formComponents: {},

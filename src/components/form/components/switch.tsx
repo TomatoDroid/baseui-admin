@@ -1,14 +1,15 @@
 import { useStore } from '@tanstack/react-form'
 import { Field, FieldError, FieldLabel } from '../../ui/field'
-import { Checkbox as CheckboxComponent } from '../../ui/checkbox'
+import { Switch as SwitchComponent } from '../../ui/switch'
 import { useFieldContext } from '../form-context'
+import React from 'react'
 
-type CheckboxProps = {
+type SwitchProps = {
   label: string
   description?: React.ReactNode
 }
 
-export default function Checkbox({ label, description }: CheckboxProps) {
+export default function Switch({ label, description }: SwitchProps) {
   const field = useFieldContext<boolean>()
   const errors = useStore(field.store, (state) => state.meta.errors)
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
@@ -16,11 +17,11 @@ export default function Checkbox({ label, description }: CheckboxProps) {
   return (
     <Field data-invalid={isInvalid}>
       <div className="flex items-center space-x-2">
-        <CheckboxComponent
+        <SwitchComponent
           id={field.name}
           name={field.name}
           checked={field.state.value}
-          onCheckedChange={(checked) => field.handleChange(checked === true)}
+          onCheckedChange={(checked) => field.handleChange(checked)}
           onBlur={field.handleBlur}
           aria-invalid={isInvalid}
         />
@@ -29,9 +30,9 @@ export default function Checkbox({ label, description }: CheckboxProps) {
         </FieldLabel>
       </div>
       {description && (
-        <p className="text-muted-foreground text-sm leading-normal font-normal mt-1">
+        <div className="text-muted-foreground text-sm leading-normal font-normal mt-1">
           {description}
-        </p>
+        </div>
       )}
       <FieldError errors={errors} />
     </Field>
