@@ -11,11 +11,12 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import { Toaster } from '@/components/ui/sonner'
-import { AuthProvider} from '../auth'
+import { AuthProvider } from '../auth'
 import { ThemeProvider } from '@/context/theme-provider'
-import { FormDevtoolsPlugin } from "@tanstack/react-form-devtools"
+import { FormDevtoolsPlugin } from '@tanstack/react-form-devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import { Outlet } from '@tanstack/react-router'
+import { FontProvider } from '@/context/font-provider'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -55,10 +56,12 @@ function RootComponent() {
       </head>
       <body>
         <ThemeProvider>
-          <AuthProvider>
-            <Outlet />
-          </AuthProvider>
-          <Toaster duration={5000} />
+          <FontProvider>
+            <AuthProvider>
+              <Outlet />
+            </AuthProvider>
+            <Toaster duration={5000} />
+          </FontProvider>
         </ThemeProvider>
         <TanStackDevtools
           config={{
@@ -70,7 +73,7 @@ function RootComponent() {
               render: <TanStackRouterDevtoolsPanel />,
             },
             TanStackQueryDevtools,
-            FormDevtoolsPlugin()
+            FormDevtoolsPlugin(),
           ]}
         />
         <Scripts />
