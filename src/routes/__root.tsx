@@ -17,6 +17,9 @@ import { AuthProvider } from '../auth'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
+const googleFontsHref =
+  'https://fonts.googleapis.com/css2?family=Borel&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'
+
 interface MyRouterContext {
   queryClient: QueryClient
 }
@@ -37,6 +40,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
     links: [
       {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'stylesheet',
+        href: googleFontsHref,
+      },
+      {
         rel: 'stylesheet',
         href: appCss,
       },
@@ -48,7 +64,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootComponent() {
   return (
-    <html lang="en">
+    <html lang="en" className="font-system">
       <head>
         <HeadContent />
       </head>
