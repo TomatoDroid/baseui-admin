@@ -1,27 +1,24 @@
+import type { QueryClient } from '@tanstack/react-query'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  Outlet,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
-import appCss from '../styles.css?url'
+import { FormDevtoolsPlugin } from '@tanstack/react-form-devtools'
 
 import { Toaster } from '@/components/ui/sonner'
-import { AuthProvider } from '../auth'
 import { ThemeProvider } from '@/context/theme-provider'
-import { FormDevtoolsPlugin } from '@tanstack/react-form-devtools'
-import type { QueryClient } from '@tanstack/react-query'
-import { Outlet } from '@tanstack/react-router'
 import { FontProvider } from '@/context/font-provider'
 import { DirectionProvider } from '@/context/direction-provider'
+import { AuthProvider } from '../auth'
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import appCss from '../styles.css?url'
 
 interface MyRouterContext {
   queryClient: QueryClient
-  // auth: ReturnType<typeof useAuth>
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({

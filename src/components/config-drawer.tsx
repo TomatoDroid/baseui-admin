@@ -1,4 +1,7 @@
+import type { SVGProps } from 'react'
 import { CircleCheck, RotateCcw, Settings } from 'lucide-react'
+import { Root as Radio, Item } from '@radix-ui/react-radio-group'
+
 import { Button } from './ui/button'
 import {
   Sheet,
@@ -9,14 +12,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
+import { useSidebar } from './ui/sidebar'
+
 import { useTheme } from '@/context/theme-provider'
+import { Collapsible, useLayout } from '@/context/layout-provider'
+import { useDirection } from '@/context/direction-provider'
 import { cn } from '@/lib/utils'
-import { Root as Radio, Item } from '@radix-ui/react-radio-group'
+
 import { IconThemeSystem } from '@/assets/custom/icon-theme-system'
 import { IconThemeLight } from '@/assets/custom/icon-theme-light'
 import { IconThemeDark } from '@/assets/custom/icon-theme-dark'
-import { SVGProps } from 'react'
-import { Collapsible, useLayout } from '@/context/layout-provider'
 import { IconSidebarSidebar } from '@/assets/custom/icon-sidebar-sidebar'
 import { IconSidebarFloating } from '@/assets/custom/icon-sidebar-floating'
 import { IconSidebarInset } from '@/assets/custom/icon-sidebar-inset'
@@ -24,15 +29,68 @@ import { IconLayoutDefault } from '@/assets/custom/icon-layout-default'
 import { IconLayoutFull } from '@/assets/custom/icon-layout-full'
 import { IconLayoutCompact } from '@/assets/custom/icon-layout-compact'
 import { IconDir } from '@/assets/custom/icon-dir'
-import { useDirection } from '@/context/direction-provider'
-import { useSidebar } from './ui/sidebar'
+
+// 配置常量
+const THEME_OPTIONS = [
+  {
+    value: 'system',
+    label: 'System',
+    icon: IconThemeSystem,
+  },
+  {
+    value: 'light',
+    label: 'Light',
+    icon: IconThemeLight,
+  },
+  {
+    value: 'dark',
+    label: 'Dark',
+    icon: IconThemeDark,
+  },
+] as const
+
+const SIDEBAR_OPTIONS = [
+  {
+    value: 'inset',
+    label: 'Inset',
+    icon: IconSidebarInset,
+  },
+  {
+    value: 'floating',
+    label: 'Floating',
+    icon: IconSidebarFloating,
+  },
+  {
+    value: 'sidebar',
+    label: 'Sidebar',
+    icon: IconSidebarSidebar,
+  },
+] as const
+
+const LAYOUT_OPTIONS = [
+  {
+    value: 'none',
+    label: 'None',
+    icon: IconLayoutDefault,
+  },
+  {
+    value: 'icon',
+    label: 'Icon',
+    icon: IconLayoutCompact,
+  },
+  {
+    value: 'offcanvas',
+    label: 'Offcanvas',
+    icon: IconLayoutFull,
+  },
+] as const
 
 export function ConfigDrawer() {
   const { resetTheme } = useTheme()
   const { resetLayout } = useLayout()
-  const { resetDir } = useDirection()
+  const { resetDir, dir } = useDirection()
   const { setOpen } = useSidebar()
-  const { dir } = useDirection()
+  
   const side = dir === 'rtl' ? 'left' : 'right'
 
   const handleReset = () => {
@@ -100,28 +158,23 @@ function ThemeConfig() {
         aria-describedby="theme-description"
         className="grid w-full max-w-md grid-cols-3 gap-4"
       >
-        {[
-          {
-            value: 'system',
-            label: 'System',
-            icon: IconThemeSystem,
-          },
-          {
-            value: 'light',
-            label: 'Light',
-            icon: IconThemeLight,
-          },
-          {
-            value: 'dark',
-            label: 'Dark',
-            icon: IconThemeDark,
-          },
-        ].map((theme) => (
-          <RadioGroupItem key={theme.value} item={theme} isTheme={true} />
+        {THEME_OPTIONS.map((themeOption) => (
+          <RadioGroupItem
+            key={themeOption.value}
+            item={themeOption}
+            isTheme={true}
+          />
         ))}
       </Radio>
     </div>
   )
+}
+
+interface SectionTitleProps {
+  title: string
+  showReset?: boolean
+  onReset?: () => void
+  className?: string
 }
 
 function SectionTitle({
@@ -129,12 +182,7 @@ function SectionTitle({
   showReset,
   onReset,
   className,
-}: {
-  title: string
-  showReset?: boolean
-  onReset?: () => void
-  className?: string
-}) {
+}: SectionTitleProps) {
   return (
     <div
       className={cn(
@@ -157,17 +205,16 @@ function SectionTitle({
   )
 }
 
-function RadioGroupItem({
-  item,
-  isTheme = false,
-}: {
+interface RadioGroupItemProps {
   item: {
     value: string
     label: string
     icon: (props: SVGProps<SVGSVGElement>) => React.ReactElement
   }
   isTheme?: boolean
-}) {
+}
+
+function RadioGroupItem({ item, isTheme = false }: RadioGroupItemProps) {
   return (
     <Item
       value={item.value}
@@ -223,27 +270,11 @@ function SidebarConfig() {
       <Radio
         value={variant}
         onValueChange={setVariant}
-        aria-label="Select collapsible preference"
-        aria-describedby="collapsible-description"
+        aria-label="Select sidebar variant"
+        aria-describedby="sidebar-description"
         className="grid w-full max-w-md grid-cols-3 gap-4"
       >
-        {[
-          {
-            value: 'inset',
-            label: 'Inset',
-            icon: IconSidebarInset,
-          },
-          {
-            value: 'floating',
-            label: 'Floating',
-            icon: IconSidebarFloating,
-          },
-          {
-            value: 'sidebar',
-            label: 'Sidebar',
-            icon: IconSidebarSidebar,
-          },
-        ].map((item) => (
+        {SIDEBAR_OPTIONS.map((item) => (
           <RadioGroupItem key={item.value} item={item} />
         ))}
       </Radio>
@@ -279,27 +310,11 @@ function LayoutConfig() {
           setCollapsible(value as Collapsible)
           setOpen(false)
         }}
-        aria-label="Select collapsible preference"
-        aria-describedby="collapsible-description"
+        aria-label="Select layout preference"
+        aria-describedby="layout-description"
         className="grid w-full max-w-md grid-cols-3 gap-4"
       >
-        {[
-          {
-            value: 'none',
-            label: 'None',
-            icon: IconLayoutDefault,
-          },
-          {
-            value: 'icon',
-            label: 'Icon',
-            icon: IconLayoutCompact,
-          },
-          {
-            value: 'offcanvas',
-            label: 'Offcanvas',
-            icon: IconLayoutFull,
-          },
-        ].map((item) => (
+        {LAYOUT_OPTIONS.map((item) => (
           <RadioGroupItem key={item.value} item={item} />
         ))}
       </Radio>
