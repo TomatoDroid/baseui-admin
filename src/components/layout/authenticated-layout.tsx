@@ -7,7 +7,7 @@ import { LayoutProvider } from '@/context/layout-provider'
 import { getCookie } from '@/lib/cookies'
 
 export function AuthenticatedLayout() {
-    const defaultOpen = getCookie('sidebar_state') !== 'false'
+  const defaultOpen = getCookie('sidebar_state') !== 'false'
   return (
     <SearchProvider>
       <LayoutProvider>

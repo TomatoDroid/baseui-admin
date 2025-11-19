@@ -32,6 +32,8 @@ export function ConfigDrawer() {
   const { resetLayout } = useLayout()
   const { resetDir } = useDirection()
   const { setOpen } = useSidebar()
+  const { dir } = useDirection()
+  const side = dir === 'rtl' ? 'left' : 'right'
 
   const handleReset = () => {
     resetTheme()
@@ -52,7 +54,7 @@ export function ConfigDrawer() {
           <Settings aria-hidden="true" />
         </Button>
       </SheetTrigger>
-      <SheetContent className={'flex flex-col'}>
+      <SheetContent className={'flex flex-col'} side={side}>
         <SheetHeader>
           <SheetTitle>Theme Settings</SheetTitle>
           <SheetDescription id="config-drawer-description">
