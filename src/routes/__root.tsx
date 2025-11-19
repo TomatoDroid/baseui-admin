@@ -17,6 +17,7 @@ import { FormDevtoolsPlugin } from '@tanstack/react-form-devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import { Outlet } from '@tanstack/react-router'
 import { FontProvider } from '@/context/font-provider'
+import { DirectionProvider } from '@/context/direction-provider'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -57,9 +58,11 @@ function RootComponent() {
       <body>
         <ThemeProvider>
           <FontProvider>
-            <AuthProvider>
-              <Outlet />
-            </AuthProvider>
+            <DirectionProvider>
+              <AuthProvider>
+                <Outlet />
+              </AuthProvider>
+            </DirectionProvider>
             <Toaster duration={5000} />
           </FontProvider>
         </ThemeProvider>
