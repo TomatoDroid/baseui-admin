@@ -253,22 +253,24 @@ function SidebarConfig() {
 }
 
 function LayoutConfig() {
-  const { setOpen } = useSidebar()
+  const { setOpen, open } = useSidebar()
   const { defaultCollapsible, collapsible, setCollapsible } = useLayout()
+  const radioState = open ? 'none' : collapsible
+
   return (
     <div>
       <SectionTitle
         title="Layout"
-        showReset={collapsible !== defaultCollapsible}
+        showReset={radioState !== 'none'}
         onReset={() => {
           setCollapsible(defaultCollapsible)
           setOpen(true)
         }}
       />
       <Radio
-        value={collapsible}
+        value={radioState}
         onValueChange={(value) => {
-          if (value === 'default') {
+          if (value === 'none') {
             setOpen(true)
             return
           }
@@ -281,18 +283,18 @@ function LayoutConfig() {
       >
         {[
           {
-            value: 'default',
-            label: 'Default',
+            value: 'none',
+            label: 'None',
             icon: IconLayoutDefault,
           },
           {
             value: 'icon',
-            label: 'Compact',
+            label: 'Icon',
             icon: IconLayoutCompact,
           },
           {
             value: 'offcanvas',
-            label: 'Full layout',
+            label: 'Offcanvas',
             icon: IconLayoutFull,
           },
         ].map((item) => (

@@ -4,12 +4,14 @@ import { Outlet } from '@tanstack/react-router'
 import { SidebarInset, SidebarProvider } from '../ui/sidebar'
 import { AppSidebar } from './app-sidebar'
 import { LayoutProvider } from '@/context/layout-provider'
+import { getCookie } from '@/lib/cookies'
 
 export function AuthenticatedLayout() {
+    const defaultOpen = getCookie('sidebar_state') !== 'false'
   return (
     <SearchProvider>
       <LayoutProvider>
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={defaultOpen}>
           <AppSidebar />
           <SidebarInset
             className={cn(

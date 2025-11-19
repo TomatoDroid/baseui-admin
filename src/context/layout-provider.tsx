@@ -39,7 +39,7 @@ export function LayoutProvider({ children }: { children: React.ReactNode }) {
   })
 
   const setCollapsible = (collapsible: Collapsible) => {
-    setCollapsible(collapsible)
+    _setCollapsible(collapsible)
     setCookie(
       LAYOUT_COLLAPSIBLE_COOKIE_NAME,
       collapsible,
