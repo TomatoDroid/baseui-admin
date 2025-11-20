@@ -19,11 +19,17 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { SignOutDialog } from '../sign-out-dialog'
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from '../ui/sidebar'
 import { User } from './types'
 
 export function NavUser({ user }: { user: User }) {
-  const [open, setOpen] = useState(true)
+  const { isMobile } = useSidebar()
+  const [open, setOpen] = useState(false)
   return (
     <>
       <SidebarMenu>
@@ -47,7 +53,7 @@ export function NavUser({ user }: { user: User }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className={'min-w-56 rounded-lg'}
-              side="right"
+              side={isMobile ? 'bottom' : 'right'}
               align="end"
             >
               <DropdownMenuGroup className={'p-0 font-normal'}>
@@ -102,7 +108,7 @@ export function NavUser({ user }: { user: User }) {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem
-                  onClick={() => setOpen(false)}
+                  onClick={() => setOpen(true)}
                   variant="destructive"
                 >
                   <LogOut />

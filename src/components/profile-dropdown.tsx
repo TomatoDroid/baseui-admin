@@ -11,8 +11,11 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import { SignOutDialog } from './sign-out-dialog'
+import { useState } from 'react'
 
 export function ProfileDropdown() {
+  const [open, setOpen] = useState(false)
   return (
     <>
       <DropdownMenu>
@@ -58,7 +61,7 @@ export function ProfileDropdown() {
             <DropdownMenuItem>new Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" onClick={() => {}}>
+          <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
             Sign out
             <DropdownMenuShortcut className="text-current">
               ⇧⌘Q
@@ -66,6 +69,7 @@ export function ProfileDropdown() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <SignOutDialog open={open} onOpenChange={setOpen} />
     </>
   )
 }
