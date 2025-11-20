@@ -1,6 +1,7 @@
 import {
   AudioWaveform,
   Bell,
+  Bot,
   Bug,
   Command,
   Construction,
@@ -10,7 +11,6 @@ import {
   LayoutDashboard,
   ListTodo,
   Lock,
-  MessagesSquare,
   Monitor,
   Package,
   Palette,
@@ -23,44 +23,43 @@ import {
   Wrench,
 } from 'lucide-react'
 import { SidebarData } from '../types'
-import { ClerkLogo } from '@/assets/clerk-logo'
 
 export const sidebarData: SidebarData = {
   user: {
     name: 'Tomato',
     email: '770226915@gmail.com',
-    avatar: "/avatar/shadcn.jpg"
+    avatar: '/avatar/shadcn.jpg',
   },
   teams: [
     {
-      name: "Shadcn Admin",
+      name: 'Shadcn Admin',
       logo: Command,
-      plan: "Vite + ShadcnUI"
+      plan: 'Vite + ShadcnUI',
     },
     {
-      name: "Acme inc",
+      name: 'Acme inc',
       logo: GalleryVerticalEnd,
-      plan: "Enterprise"
+      plan: 'Enterprise',
     },
     {
-      name: "Acme Crop",
+      name: 'Acme Crop',
       logo: AudioWaveform,
-      plan: "Startup"
-    }
+      plan: 'Startup',
+    },
   ],
   navGroups: [
     {
-      title: "General",
+      title: 'General',
       items: [
         {
-          title: "Dashboard",
-          url: "/",
-          icon: LayoutDashboard
+          title: 'Dashboard',
+          url: '/',
+          icon: LayoutDashboard,
         },
         {
-          title: "Tasks",
-          url: "/tasks",
-          icon: ListTodo
+          title: 'Tasks',
+          url: '/tasks',
+          icon: ListTodo,
         },
         {
           title: 'Apps',
@@ -72,10 +71,15 @@ export const sidebarData: SidebarData = {
           url: '/users',
           icon: Users,
         },
-      ]
+        {
+          title: 'ChatBot',
+          url: '/chatbot',
+          icon: Bot,
+        },
+      ],
     },
     {
-      title: "Pages",
+      title: 'Pages',
       items: [
         {
           title: 'Auth',
@@ -134,7 +138,7 @@ export const sidebarData: SidebarData = {
             },
           ],
         },
-      ]
+      ],
     },
     {
       title: 'Other',
@@ -177,5 +181,5 @@ export const sidebarData: SidebarData = {
         },
       ],
     },
-  ]
+  ],
 }
