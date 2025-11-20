@@ -98,7 +98,8 @@ function SidebarMenuCollapsible({
             <ChevronRight className="ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180" />
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        <CollapsibleContent className="CollapsibleContent">
+        {/* TODO: add a loading state when the collapsible is open */}
+        <CollapsibleContent className="">
           <SidebarMenuSub>
             {item.items.map((subItem) => (
               <SidebarMenuSubItem key={subItem.title}>
