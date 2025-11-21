@@ -25,13 +25,6 @@ export type DemoMessage = {
   tasks?: Array<DemoTask>
 }
 
-export type TeachingHighlight = {
-  title: string
-  description: string
-  icon: LucideIcon
-}
-
-
 export type DemoSuggestionRowProps = {
   suggestions: Array<string>
   onRun: (value: string) => void

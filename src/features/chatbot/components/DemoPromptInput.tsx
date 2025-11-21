@@ -15,6 +15,7 @@ import {
   PromptInputBody,
   PromptInputButton,
   PromptInputFooter,
+  PromptInputHeader,
   PromptInputSubmit,
   PromptInputTextarea,
   PromptInputTools,
@@ -37,6 +38,11 @@ export function DemoPromptInput({ status, onSubmit }: DemoPromptInputProps) {
       multiple
       onSubmit={onSubmit}
     >
+      <PromptInputHeader>
+        <PromptInputAttachments>
+          {(file) => <PromptInputAttachment data={file} key={file.id} />}
+        </PromptInputAttachments>
+      </PromptInputHeader>
       <PromptInputBody>
         <PromptInputTextarea
           autoFocus={false}
@@ -66,10 +72,6 @@ export function DemoPromptInput({ status, onSubmit }: DemoPromptInputProps) {
           variant="default"
         />
       </PromptInputFooter>
-      <PromptInputAttachments>
-        {(file) => <PromptInputAttachment data={file} key={file.id} />}
-      </PromptInputAttachments>
     </PromptInput>
   )
 }
-
