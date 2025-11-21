@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  Share2Icon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-} from 'lucide-react'
+import { Share2Icon, ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react'
 
 import type { DemoMessage } from '../types'
 import {
@@ -80,7 +76,10 @@ export function DemoMessageBubble({ message }: DemoMessageBubbleProps) {
           <MessageBranch className="space-y-4">
             <MessageBranchContent>
               {message.branches.map((branch, index) => (
-                <div key={`${message.id}-branch-${index}`} className="space-y-3">
+                <div
+                  key={`${message.id}-branch-${index}`}
+                  className="space-y-3"
+                >
                   <MessageResponse>{branch}</MessageResponse>
                 </div>
               ))}
@@ -108,12 +107,15 @@ export function DemoMessageBubble({ message }: DemoMessageBubbleProps) {
             language={message.codeSample.language}
             showLineNumbers
           >
-            <CodeBlockCopyButton tooltip="复制代码" />
+            <CodeBlockCopyButton />
           </CodeBlock>
         ) : null}
 
         {message.tasks?.map((task) => (
-          <Task key={`${message.id}-${task.title}`} className="mt-4 border-l pl-3">
+          <Task
+            key={`${message.id}-${task.title}`}
+            className="mt-4 border-l pl-3"
+          >
             <TaskTrigger title={task.title} />
             <TaskContent>
               {task.files?.length ? (
@@ -144,4 +146,3 @@ export function DemoMessageBubble({ message }: DemoMessageBubbleProps) {
     </Message>
   )
 }
-
