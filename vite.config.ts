@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 const config = defineConfig({
+  base: process.env.BASE_PATH || '/',
   plugins: [
     devtools(),
     // this is the plugin that enables path aliases

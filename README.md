@@ -4,8 +4,9 @@
 
 基于 TanStack Start、React 19 与 Vite 7 打造的现代化后台模板，集成路由、数据获取、表单、表格与多主题布局，为中大型 BFF/SSR 场景提供开箱即用的脚手架。
 
-[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://your-project.vercel.app)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/your-username/reactsse/ci.yml?label=CI&logo=github&style=for-the-badge)](https://github.com/your-username/reactsse/actions)
+[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://your-username.github.io/reactsse/)
+[![GitHub Pages](https://img.shields.io/github/deployments/your-username/reactsse/github-pages?label=GitHub%20Pages&logo=github&style=for-the-badge)](https://your-username.github.io/reactsse/)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/your-username/reactsse/deploy.yml?label=Deploy&logo=github&style=for-the-badge)](https://github.com/your-username/reactsse/actions)
 
 </div>
 
@@ -158,50 +159,66 @@ export const getRouter = () => {
 
 ## 部署
 
-### 自动部署（推荐）
+### 自动部署到 GitHub Pages（推荐）
 
-本项目已配置 GitHub Actions CI 和 Vercel 自动部署。每次推送到 `main` 分支会自动触发部署。
+本项目已配置 GitHub Actions 自动部署到 GitHub Pages。每次推送到 `main` 分支会自动触发构建和部署。
 
-#### 使用 Vercel 部署（推荐）
+#### 首次设置步骤
 
-1. **连接 GitHub 仓库**
-   - 访问 [Vercel](https://vercel.com)
-   - 使用 GitHub 账号登录
-   - 点击 "Add New Project"
-   - 选择本仓库
+1. **启用 GitHub Pages**
+   - 进入仓库的 **Settings** → **Pages**
+   - 在 "Source" 部分选择 **GitHub Actions**
+   - 保存设置
 
-2. **配置项目**
-   - Framework Preset: 选择 "Other" 或 "Vite"
-   - Build Command: `pnpm build`
-   - Output Directory: `dist`
-   - Install Command: `pnpm install`
-   - Root Directory: `./`
+2. **更新 README 中的地址**
+   - 将 README 中的 `your-username` 替换为你的 GitHub 用户名
+   - 将 `reactsse` 替换为你的仓库名（如果不同）
+   - 访问地址格式：`https://your-username.github.io/reactsse/`
 
-3. **环境变量**（如需要）
-   - 在 Vercel 项目设置中添加必要的环境变量
+3. **推送代码触发部署**
+   ```bash
+   git add .
+   git commit -m "配置 GitHub Pages 自动部署"
+   git push origin main
+   ```
 
-4. **部署**
-   - 点击 "Deploy"，Vercel 会自动检测 `vercel.json` 配置
-   - 部署完成后会获得一个 `*.vercel.app` 的访问地址
-   - 每次推送到 `main` 分支会自动触发重新部署
+4. **查看部署状态**
+   - 访问仓库的 **Actions** 标签页查看部署进度
+   - 部署完成后，访问 `https://your-username.github.io/reactsse/` 查看网站
 
-5. **更新 README 中的体验地址**
-   - 将 README 中的 `https://your-project.vercel.app` 替换为实际的 Vercel 地址
+#### 自动部署流程
 
-#### 使用 Netlify 部署
+配置完成后，每次你：
 
-1. 访问 [Netlify](https://www.netlify.com)
-2. 连接 GitHub 仓库
-3. 构建设置：
-   - Build command: `pnpm build`
-   - Publish directory: `dist`
-   - 环境变量：`NODE_VERSION=20`、`PNPM_VERSION=10`
+- ✅ 推送到 `main` 分支 → 自动构建并部署到 GitHub Pages
+- ✅ 合并 Pull Request → 自动更新网站
+- ✅ 手动触发 → 在 Actions 页面点击 "Run workflow"
+
+#### 注意事项
+
+- ⚠️ **GitHub Pages 仅支持静态站点**：本项目会构建为静态站点（SPA 模式）
+- ⚠️ **Base 路径**：已自动配置为仓库名路径，确保路由正常工作
+- ⚠️ **首次部署**：可能需要几分钟时间，请耐心等待
 
 ### 手动部署
 
-1. 执行 `pnpm build`，在 `dist/` 下生成客户端 + SSR 产物。
-2. 通过 `pnpm serve` 或自定义 Node 入口进行预览/部署。
-3. 若需容器化，可在部署脚本中预装 PNPM、执行 `pnpm fetch` + `pnpm install --offline` 加速构建。
+如果需要手动部署：
+
+```bash
+# 构建项目
+pnpm build
+
+# 部署到 gh-pages 分支（需要安装 gh-pages）
+npx gh-pages -d dist
+```
+
+### 其他部署平台
+
+如果需要 SSR 功能，可以考虑：
+
+- **Vercel**：支持 SSR，自动检测 TanStack Start
+- **Netlify**：支持 SSR，需要配置构建命令
+- **Cloudflare Pages**：支持 SSR，需要 Worker 配置
 
 ## 常见问题
 
