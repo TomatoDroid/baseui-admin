@@ -4,9 +4,9 @@
 
 基于 TanStack Start、React 19 与 Vite 7 打造的现代化后台模板，集成路由、数据获取、表单、表格与多主题布局，为中大型 BFF/SSR 场景提供开箱即用的脚手架。
 
-[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://your-username.github.io/reactsse/)
-[![GitHub Pages](https://img.shields.io/github/deployments/your-username/reactsse/github-pages?label=GitHub%20Pages&logo=github&style=for-the-badge)](https://your-username.github.io/reactsse/)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/your-username/reactsse/deploy.yml?label=Deploy&logo=github&style=for-the-badge)](https://github.com/your-username/reactsse/actions)
+[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://TomatoDroid.github.io/tanstack-start-admin-dashboard/)
+[![GitHub Pages](https://img.shields.io/github/deployments/TomatoDroid/tanstack-start-admin-dashboard/github-pages?label=GitHub%20Pages&logo=github&style=for-the-badge)](https://TomatoDroid.github.io/tanstack-start-admin-dashboard/)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/TomatoDroid/tanstack-start-admin-dashboard/deploy.yml?label=Deploy&logo=github&style=for-the-badge)](https://github.com/TomatoDroid/tanstack-start-admin-dashboard/actions)
 
 </div>
 
@@ -171,9 +171,9 @@ export const getRouter = () => {
    - 保存设置
 
 2. **更新 README 中的地址**
-   - 将 README 中的 `your-username` 替换为你的 GitHub 用户名
-   - 将 `reactsse` 替换为你的仓库名（如果不同）
-   - 访问地址格式：`https://your-username.github.io/reactsse/`
+   - 将 README 中的 `TomatoDroid` 替换为你的 GitHub 用户名
+   - 将 `tanstack-start-admin-dashboard` 替换为你的仓库名（如果不同）
+   - 访问地址格式：`https://TomatoDroid.github.io/tanstack-start-admin-dashboard/`
 
 3. **推送代码触发部署**
    ```bash
@@ -184,7 +184,7 @@ export const getRouter = () => {
 
 4. **查看部署状态**
    - 访问仓库的 **Actions** 标签页查看部署进度
-   - 部署完成后，访问 `https://your-username.github.io/reactsse/` 查看网站
+   - 部署完成后，访问 `https://TomatoDroid.github.io/tanstack-start-admin-dashboard/` 查看网站
 
 #### 自动部署流程
 
