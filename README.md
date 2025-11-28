@@ -6,6 +6,16 @@
 
 </div>
 
+## 界面预览
+
+本项目支持亮色和暗色两种主题模式，提供一致的用户体验。
+
+### 亮色主题
+![亮色主题 Dashboard](public/light-dashboard.png)
+
+### 暗色主题
+![暗色主题 Dashboard](public/dark-dashboaard.png)
+
 ## 技术栈一览
 
 - **运行时**：React 19 + Vite 7（SSR & Streaming ready）
