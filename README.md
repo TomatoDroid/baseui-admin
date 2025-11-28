@@ -4,6 +4,9 @@
 
 基于 TanStack Start、React 19 与 Vite 7 打造的现代化后台模板，集成路由、数据获取、表单、表格与多主题布局，为中大型 BFF/SSR 场景提供开箱即用的脚手架。
 
+[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://your-project.vercel.app)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/your-username/reactsse/ci.yml?label=CI&logo=github&style=for-the-badge)](https://github.com/your-username/reactsse/actions)
+
 </div>
 
 ## 界面预览
@@ -154,6 +157,47 @@ export const getRouter = () => {
 在 CI 中建议分阶段执行（Lint → Test → Build）以更快暴露问题。
 
 ## 部署
+
+### 自动部署（推荐）
+
+本项目已配置 GitHub Actions CI 和 Vercel 自动部署。每次推送到 `main` 分支会自动触发部署。
+
+#### 使用 Vercel 部署（推荐）
+
+1. **连接 GitHub 仓库**
+   - 访问 [Vercel](https://vercel.com)
+   - 使用 GitHub 账号登录
+   - 点击 "Add New Project"
+   - 选择本仓库
+
+2. **配置项目**
+   - Framework Preset: 选择 "Other" 或 "Vite"
+   - Build Command: `pnpm build`
+   - Output Directory: `dist`
+   - Install Command: `pnpm install`
+   - Root Directory: `./`
+
+3. **环境变量**（如需要）
+   - 在 Vercel 项目设置中添加必要的环境变量
+
+4. **部署**
+   - 点击 "Deploy"，Vercel 会自动检测 `vercel.json` 配置
+   - 部署完成后会获得一个 `*.vercel.app` 的访问地址
+   - 每次推送到 `main` 分支会自动触发重新部署
+
+5. **更新 README 中的体验地址**
+   - 将 README 中的 `https://your-project.vercel.app` 替换为实际的 Vercel 地址
+
+#### 使用 Netlify 部署
+
+1. 访问 [Netlify](https://www.netlify.com)
+2. 连接 GitHub 仓库
+3. 构建设置：
+   - Build command: `pnpm build`
+   - Publish directory: `dist`
+   - 环境变量：`NODE_VERSION=20`、`PNPM_VERSION=10`
+
+### 手动部署
 
 1. 执行 `pnpm build`，在 `dist/` 下生成客户端 + SSR 产物。
 2. 通过 `pnpm serve` 或自定义 Node 入口进行预览/部署。
