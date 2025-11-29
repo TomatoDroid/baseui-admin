@@ -4,7 +4,6 @@ import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
 import { defineConfig } from 'vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
-import { cloudflare } from '@cloudflare/vite-plugin'
 
 const config = defineConfig({
   base: process.env.BASE_PATH || '/',
@@ -14,7 +13,6 @@ const config = defineConfig({
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),
