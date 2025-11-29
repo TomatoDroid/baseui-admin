@@ -157,35 +157,6 @@ export const getRouter = () => {
 
 在 CI 中建议分阶段执行（Lint → Test → Build）以更快暴露问题。
 
-## 部署
-
-### 自动部署到 GitHub Pages（推荐）
-
-本项目已配置 GitHub Actions 自动部署到 GitHub Pages。每次推送到 `main` 分支会自动触发构建和部署。
-
-#### 首次设置步骤
-
-1. **启用 GitHub Pages**
-   - 进入仓库的 **Settings** → **Pages**
-   - 在 "Source" 部分选择 **GitHub Actions**
-   - 保存设置
-
-2. **更新 README 中的地址**
-   - 将 README 中的 `TomatoDroid` 替换为你的 GitHub 用户名
-   - 将 `tanstack-start-admin-dashboard` 替换为你的仓库名（如果不同）
-   - 访问地址格式：`https://TomatoDroid.github.io/tanstack-start-admin-dashboard/`
-
-3. **推送代码触发部署**
-   ```bash
-   git add .
-   git commit -m "配置 GitHub Pages 自动部署"
-   git push origin main
-   ```
-
-4. **查看部署状态**
-   - 访问仓库的 **Actions** 标签页查看部署进度
-   - 部署完成后，访问 `https://TomatoDroid.github.io/tanstack-start-admin-dashboard/` 查看网站
-
 #### 自动部署流程
 
 配置完成后，每次你：
