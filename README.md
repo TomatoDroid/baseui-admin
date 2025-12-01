@@ -4,10 +4,6 @@
 
 基于 TanStack Start、React 19 与 Vite 7 打造的现代化后台模板，集成路由、数据获取、表单、表格与多主题布局，为中大型 BFF/SSR 场景提供开箱即用的脚手架。
 
-[![在线体验](https://img.shields.io/badge/在线体验-点击访问-blue?style=for-the-badge)](https://TomatoDroid.github.io/tanstack-start-admin-dashboard/)
-[![GitHub Pages](https://img.shields.io/github/deployments/TomatoDroid/tanstack-start-admin-dashboard/github-pages?label=GitHub%20Pages&logo=github&style=for-the-badge)](https://TomatoDroid.github.io/tanstack-start-admin-dashboard/)
-[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/TomatoDroid/tanstack-start-admin-dashboard/deploy.yml?label=Deploy&logo=github&style=for-the-badge)](https://github.com/TomatoDroid/tanstack-start-admin-dashboard/actions)
-
 </div>
 
 ## 界面预览
