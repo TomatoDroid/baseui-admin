@@ -18,7 +18,7 @@
 ![亮色主题 Dashboard](public/light-dashboard.png)
 
 ### 暗色主题
-![暗色主题 Dashboard](public/dark-dashboaard.png)
+![暗色主题 Dashboard](public/dark-dashboard.png)
 
 ## 技术栈一览
 
