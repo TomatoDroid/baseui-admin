@@ -1,12 +1,4 @@
 {
-  "files.watcherExclude": {
-    "**/routeTree.gen.ts": true
-  },
-  "search.exclude": {
-    "**/routeTree.gen.ts": true
-  },
-  "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
-  },
-  "editor.fontSize": 18
+  "css.lint.unknownAtRules": "ignore",
+  "css.customData": [".vscode/css-custom-data.json"]
 }
