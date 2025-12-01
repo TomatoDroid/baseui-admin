@@ -4,6 +4,7 @@ import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
 import { defineConfig } from 'vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
+import { nitro } from 'nitro/vite'
 
 const config = defineConfig({
   base: process.env.BASE_PATH || '/',
@@ -15,6 +16,7 @@ const config = defineConfig({
     }),
     tailwindcss(),
     tanstackStart(),
+    nitro(),
     viteReact(),
   ],
 })
